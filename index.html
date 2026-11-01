@@ -379,7 +379,7 @@
         fill: #ff9bad;
         stroke: #ffced8;
         stroke-width: 1.3;
-        opacity: 0.84;
+        opacity: 0.48;
       }
       .lens {
         fill: url(#lensGradient);
@@ -540,248 +540,16 @@
         }
       }
 
-      /* LENS ATELIER — complete warm editorial re-theme */
+      /* Fixed original Polar Prism appearance; no theme switching. */
       :root {
-        --bg: #f5f0e8;
-        --panel: #fffdf9;
-        --panel2: #faf5ed;
-        --text: #302a42;
-        --sub: #746e82;
-        --accent: #cc6d45;
-        --gold: #e2a347;
-        --blue: #7869ba;
-        --pink: #8d7ccb;
-        --border: #e5daca;
+        --bg:#e9f2f7;--panel:#ffffff;--panel2:#edf5f9;
+        --canvas:#e4f3fa;--text:#102b44;--sub:#587187;
+        --accent:#006e9f;--secondary:#7b43af;--border:#b9d4e2;
+        --object:#ed693c;--image:#7d4ac2;--ray:#d99600;
+        --ray2:#1b8dce;--virtual:#b2549b;--lens-color:#00a2bd;
+        --surface:#eef5f9;--surface-active:#dceef6;
+        --corner:20px;--ui-scale:1;--panel-gap:16px;
       }
-      body {
-        background:
-          radial-gradient(ellipse at 8% 0%, #fff0d9 0, transparent 48%),
-          radial-gradient(ellipse at 95% 90%, #e5ddf7 0, transparent 40%),
-          #f5f0e8;
-        color: var(--text);
-      }
-      .wrap {
-        max-width: 1620px;
-        padding: clamp(12px, 2vw, 30px);
-      }
-      header {
-        padding: 5px 4px 9px;
-        border-bottom: 1px solid #e3d9cc;
-        margin-bottom: 22px;
-      }
-      header p {
-        color: #756c80;
-      }
-      .brandIcon {
-        background: linear-gradient(135deg, #e99b6b, #b86875);
-        color: white;
-        box-shadow: 0 9px 25px #b8615d30;
-        border-radius: 18px;
-        transform: rotate(-8deg);
-      }
-      h1 {
-        letter-spacing: -0.8px;
-        color: #352d4b;
-      }
-      .pill {
-        background: #fffdf9;
-        border: 1px solid #decdbb;
-        color: #9a4f43;
-        box-shadow: 0 5px 15px #8b5e3620;
-        font-weight: 800;
-      }
-      .pill:hover {
-        background: #fff0df;
-      }
-      .panel {
-        background: linear-gradient(150deg, #fffdfa, #fffaf4);
-        border: 1px solid #e5d8cb;
-        box-shadow: 0 14px 40px #765e4e13;
-        border-radius: 23px;
-      }
-      .panel h2 {
-        color: #45365b;
-        font-weight: 850;
-      }
-      .label {
-        color: #63576f;
-        font-weight: 700;
-      }
-      .choice,
-      .shapeChoice,
-      .action {
-        color: #51445f;
-        background: #f9f3eb;
-        border: 1px solid #e6d8c9;
-        border-radius: 14px;
-        box-shadow: 0 2px 0 #f2e7d9;
-        transition:
-          background 0.2s,
-          border-color 0.2s,
-          transform 0.2s,
-          box-shadow 0.2s;
-      }
-      .choice:hover,
-      .shapeChoice:hover,
-      .action:hover {
-        background: #f7eadb;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px #90705a19;
-      }
-      .choice.active,
-      .shapeChoice.active {
-        background: #fff0e5;
-        border-color: #dc906a;
-        box-shadow:
-          inset 0 0 0 1px #e8a889,
-          0 4px 14px #df916524;
-      }
-      .scaleHeader output {
-        color: #b65c3d;
-        font-weight: 850;
-        background: #fbeee4;
-        padding: 3px 8px;
-        border-radius: 8px;
-      }
-      input[type="range"] {
-        accent-color: #c9734e;
-      }
-      .checks label {
-        color: #655b73;
-      }
-      .checks input {
-        accent-color: #c9734e;
-      }
-      .stage {
-        background: radial-gradient(
-          circle at 35% 22%,
-          #fffdf8 0,
-          #f7f1e6 60%,
-          #eee6dc 100%
-        );
-        border: 1px solid #dfd2c4;
-        box-shadow: inset 0 1px 14px #977b5711;
-      }
-      .stageHeader .live {
-        color: #ac6348;
-        background: #fff0de;
-        padding: 5px 10px;
-        border-radius: 99px;
-      }
-      .metric {
-        background: #f9f3eb;
-        border: 1px solid #e8dacc;
-        border-radius: 15px;
-      }
-      .metric .name,
-      .note,
-      .small,
-      .legend,
-      .footer {
-        color: #7e7486;
-      }
-      .metric strong {
-        color: #45345f;
-      }
-      .result {
-        background: #f5edf8;
-        border-color: #dfcfea;
-      }
-      .result h3 {
-        color: #714f94;
-      }
-      .result p {
-        color: #483d5b;
-      }
-      .formula {
-        background: #fcf1e2;
-        color: #9b5b42;
-        border: 1px solid #f2dcc5;
-      }
-      .axis {
-        stroke: #a99ba5;
-      }
-      .gridline {
-        stroke: #ad98ba;
-        opacity: 0.14;
-      }
-      .mainRay {
-        stroke: #e4a044;
-      }
-      .ray2 {
-        stroke: #7766b9;
-      }
-      .virtualRay {
-        stroke: #b18ac1;
-      }
-      .obj {
-        fill: #e58b50;
-        stroke: #fff0db;
-        filter: drop-shadow(0 3px 5px #ad6b3f40);
-      }
-      .imageObj {
-        fill: #8570c1;
-        stroke: #f0eaff;
-        opacity: 0.88;
-      }
-      .lens {
-        stroke: #9f83c2;
-        filter: drop-shadow(0 0 10px #a48bd255);
-      }
-      .focus {
-        fill: #bd775a;
-      }
-      .svgLabel {
-        fill: #685e73;
-      }
-      .handle {
-        stroke: #c46d46;
-        fill: #fff6eb;
-      }
-      .verticalEnds {
-        display: flex;
-        justify-content: space-between;
-        font-size: 11px;
-        color: #8d7e90;
-        padding: 0 2px;
-      }
-      .shapes {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px;
-      }
-      @media (max-width: 720px) {
-        .stagePanel {
-          grid-row: 1;
-        }
-        .stage {
-          min-height: 280px;
-        }
-        .controls {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-        .controls .verticalControl {
-          grid-column: auto;
-        }
-      }
-      @media (max-width: 420px) {
-        .controls {
-          grid-template-columns: 1fr;
-        }
-        .controls .group {
-          grid-column: 1/-1;
-        }
-        header {
-          gap: 10px;
-        }
-        .pill {
-          margin-inline-start: auto;
-        }
-        .stage {
-          min-height: 260px;
-        }
-      }
-
       /* Theme editor and variable-based full UI skin */
       :root {
         --canvas: #f7f1e6;
@@ -967,219 +735,6 @@
         filter: none;
         stroke-width: 1.8px;
       }
-      .headerActions {
-        display: flex;
-        gap: 9px;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-      .themeToggle {
-        font-weight: 800;
-      }
-      .themePanel[hidden] {
-        display: none !important;
-      }
-      .themePanel {
-        background: var(--panel);
-        color: var(--text);
-        border: 1px solid var(--border);
-        border-radius: var(--corner);
-        padding: clamp(14px, 2vw, 24px);
-        margin-bottom: 17px;
-        box-shadow: 0 18px 45px #00000013;
-        animation: themeOpen 0.25s ease-out;
-      }
-      @keyframes themeOpen {
-        from {
-          opacity: 0;
-          transform: translateY(-6px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .themePanelHead {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 12px;
-      }
-      .themePanelHead h2 {
-        font-size: 1.2rem;
-        margin: 0;
-      }
-      .themePanelHead p {
-        color: var(--sub);
-        font-size: 0.82rem;
-        margin: 5px 0 0;
-      }
-      .themePanel h3 {
-        font-size: 0.86rem;
-        margin: 0 0 12px;
-        color: var(--text);
-      }
-      .themeBlock {
-        margin-top: 18px;
-        padding-top: 16px;
-        border-top: 1px solid var(--border);
-      }
-      .presetGrid {
-        display: grid;
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-        gap: 8px;
-      }
-      .preset {
-        background: var(--surface);
-        color: var(--text);
-        border: 1.5px solid var(--border);
-        border-radius: calc(var(--corner) * 0.65);
-        padding: 12px 5px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        gap: 8px;
-        min-width: 0;
-        font-size: 0.78rem;
-        font-weight: 700;
-        cursor: pointer;
-      }
-      .preset[aria-pressed="true"] {
-        border-color: var(--accent);
-        box-shadow: inset 0 0 0 1px var(--accent);
-      }
-      .preset:hover {
-        border-color: var(--accent);
-      }
-      .swatches {
-        display: flex;
-        gap: 0;
-      }
-      .swatches i {
-        display: block;
-        width: 18px;
-        height: 28px;
-        border: 1px solid #0002;
-      }
-      .swatches i:first-child {
-        border-radius: 7px 0 0 7px;
-      }
-      .swatches i:last-child {
-        border-radius: 0 7px 7px 0;
-      }
-      .colorGrid {
-        display: grid;
-        grid-template-columns: repeat(7, minmax(0, 1fr));
-        gap: 10px;
-      }
-      .colorGrid label {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-direction: column;
-        text-align: center;
-        min-width: 0;
-        font-size: 0.73rem;
-        color: var(--sub);
-        cursor: pointer;
-      }
-      .colorGrid input[type="color"] {
-        width: min(100%, 76px);
-        height: 39px;
-        border: 1px solid var(--border);
-        border-radius: 9px;
-        background: var(--surface);
-        padding: 3px;
-        cursor: pointer;
-      }
-      .styleGrid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
-      }
-      .styleGrid label {
-        min-width: 0;
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 5px;
-        font-size: 0.8rem;
-        color: var(--text);
-      }
-      .styleGrid input {
-        grid-column: 1/-1;
-      }
-      .styleGrid output {
-        color: var(--accent);
-      }
-      .themeActions {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin-top: 20px;
-      }
-      .themeActions button {
-        font-size: 0.78rem;
-      }
-      .themeActions #themeNotice {
-        color: var(--accent);
-        font-size: 0.8rem;
-      }
-      @media (max-width: 1100px) {
-        .presetGrid {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-        .colorGrid {
-          grid-template-columns: repeat(4, minmax(0, 1fr));
-        }
-      }
-      @media (max-width: 720px) {
-        .headerActions {
-          margin-inline-start: auto;
-        }
-        .presetGrid {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-        .colorGrid {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-        .styleGrid {
-          grid-template-columns: 1fr;
-        }
-        .shapePreview {
-          width: 76px;
-          height: 66px;
-        }
-        .shapeChoice {
-          min-height: 97px;
-        }
-        .panel {
-          padding: var(--panel-gap);
-        }
-      }
-      @media (max-width: 410px) {
-        .headerActions {
-          width: 100%;
-          justify-content: space-between;
-        }
-        .themeToggle,
-        .headerActions #language {
-          flex: 1;
-        }
-        .presetGrid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-        .colorGrid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .themePanel {
-          animation: none;
-        }
-      }
-
       /* POLAR PRISM: clean scientific exhibit, not the previous warm-card interface */
       :root {
         --bg: #e9f2f7;
@@ -1327,213 +882,11 @@
             </p>
           </div>
         </div>
-        <div class="headerActions">
-          <button
-            aria-controls="themePanel"
-            aria-expanded="false"
-            class="pill themeToggle"
-            data-i18n="themeButton"
-            id="themeToggle"
-            type="button"
-          >
-            🎨 Customize theme</button
-          ><button aria-label="Switch language" class="pill" id="language">
+        <div class="headerActions"><button aria-label="Switch language" class="pill" id="language">
             العربية
           </button>
         </div>
       </header>
-      <section
-        aria-label="Theme customization"
-        class="themePanel"
-        hidden=""
-        id="themePanel"
-      >
-        <div class="themePanelHead">
-          <div>
-            <h2 data-i18n="themeHeading">Customize your lab</h2>
-            <p data-i18n="themeDescription">
-              Choose a palette or make every color your own. Saved automatically
-              on this device.
-            </p>
-          </div>
-          <button
-            aria-label="Close"
-            class="action"
-            id="closeTheme"
-            type="button"
-          >
-            ✕
-          </button>
-        </div>
-        <div class="themeBlock">
-          <h3 data-i18n="themePresets">Theme presets</h3>
-          <div class="presetGrid" id="presetGrid">
-            <button class="preset" data-preset="atelier" type="button">
-              <span class="swatches"
-                ><i style="background: #e9f2f7"></i
-                ><i style="background: #006e9f"></i
-                ><i style="background: #7b43af"></i></span
-              ><span data-i18n="presetAtelier">Polar prism</span>
-            </button>
-            <button class="preset" data-preset="ocean" type="button">
-              <span class="swatches"
-                ><i style="background: #eaf7f6"></i
-                ><i style="background: #007e88"></i
-                ><i style="background: #3176d3"></i></span
-              ><span data-i18n="presetOcean">Ocean breeze</span>
-            </button>
-            <button class="preset" data-preset="midnight" type="button">
-              <span class="swatches"
-                ><i style="background: #11192e"></i
-                ><i style="background: #7ce1c4"></i
-                ><i style="background: #a996ff"></i></span
-              ><span data-i18n="presetMidnight">Midnight lab</span>
-            </button>
-            <button class="preset" data-preset="forest" type="button">
-              <span class="swatches"
-                ><i style="background: #eaf1e5"></i
-                ><i style="background: #327e61"></i
-                ><i style="background: #c27a3b"></i></span
-              ><span data-i18n="presetForest">Botanical</span>
-            </button>
-            <button class="preset" data-preset="rose" type="button">
-              <span class="swatches"
-                ><i style="background: #fff0f4"></i
-                ><i style="background: #c34a80"></i
-                ><i style="background: #7863c5"></i></span
-              ><span data-i18n="presetRose">Rose quartz</span>
-            </button>
-            <button class="preset" data-preset="contrast" type="button">
-              <span class="swatches"
-                ><i style="background: #ffffff"></i
-                ><i style="background: #0055aa"></i
-                ><i style="background: #e26c00"></i></span
-              ><span data-i18n="presetContrast">High contrast</span>
-            </button>
-          </div>
-        </div>
-        <div class="themeBlock">
-          <h3 data-i18n="themeColors">Custom colors</h3>
-          <div class="colorGrid" id="themeColors">
-            <label
-              ><span data-i18n="colorBg">Page background</span
-              ><input data-color="bg" type="color"
-            /></label>
-            <label
-              ><span data-i18n="colorPanel">Cards / panels</span
-              ><input data-color="panel" type="color"
-            /></label>
-            <label
-              ><span data-i18n="colorCanvas">Diagram canvas</span
-              ><input data-color="canvas" type="color"
-            /></label>
-            <label
-              ><span data-i18n="colorText">Main text</span
-              ><input data-color="text" type="color"
-            /></label>
-            <label
-              ><span data-i18n="colorSub">Secondary text</span
-              ><input data-color="sub" type="color"
-            /></label>
-            <label
-              ><span data-i18n="colorAccent">Primary accent</span
-              ><input data-color="accent" type="color"
-            /></label>
-            <label
-              ><span data-i18n="colorSecondary">Secondary accent</span
-              ><input data-color="secondary" type="color"
-            /></label>
-            <label
-              ><span data-i18n="colorBorder">Borders</span
-              ><input data-color="border" type="color"
-            /></label>
-            <label
-              ><span data-i18n="colorObject">Object</span
-              ><input data-color="object" type="color"
-            /></label>
-            <label
-              ><span data-i18n="colorImage">Image</span
-              ><input data-color="image" type="color"
-            /></label>
-            <label
-              ><span data-i18n="colorRay">Main light ray</span
-              ><input data-color="ray" type="color"
-            /></label>
-            <label
-              ><span data-i18n="colorRay2">Secondary ray</span
-              ><input data-color="ray2" type="color"
-            /></label>
-            <label
-              ><span data-i18n="colorVirtual">Virtual rays</span
-              ><input data-color="virtual" type="color"
-            /></label>
-            <label
-              ><span data-i18n="colorLens">Lens outline</span
-              ><input data-color="lens" type="color"
-            /></label>
-          </div>
-        </div>
-        <div class="themeBlock">
-          <h3 data-i18n="themeLook">Appearance</h3>
-          <div class="styleGrid">
-            <label
-              ><span data-i18n="roundness">Corner roundness</span
-              ><input
-                id="radiusSetting"
-                max="34"
-                min="4"
-                type="range"
-                value="20"
-              /><output id="radiusValue">20px</output></label
-            >
-            <label
-              ><span data-i18n="fontScale">Interface text size</span
-              ><input
-                id="fontSetting"
-                max="125"
-                min="85"
-                step="5"
-                type="range"
-                value="100"
-              /><output id="fontValue">100%</output></label
-            >
-            <label
-              ><span data-i18n="spacing">Panel spacing</span
-              ><input
-                id="spacingSetting"
-                max="26"
-                min="8"
-                type="range"
-                value="16"
-              /><output id="spacingValue">16px</output></label
-            >
-          </div>
-        </div>
-        <div class="themeActions">
-          <button
-            class="action"
-            data-i18n="resetTheme"
-            id="resetTheme"
-            type="button"
-          >
-            ↺ Default theme</button
-          ><button
-            class="action"
-            data-i18n="exportTheme"
-            id="exportTheme"
-            type="button"
-          >
-            Copy theme JSON</button
-          ><button
-            class="action"
-            data-i18n="importTheme"
-            id="importTheme"
-            type="button"
-          >
-            Import theme JSON</button
-          ><span aria-live="polite" id="themeNotice" role="status"></span>
-        </div>
-      </section>
       <main class="layout">
         <section class="panel controls">
           <h2 data-i18n="controls">Experiment controls</h2>
@@ -1564,18 +917,13 @@
           <div class="group">
             <label class="label" data-i18n="objectType">Choose an object</label>
             <div class="shapes">
-              <button class="shapeChoice active" data-shape="arrow">
-                <span>⬆</span><span data-i18n="arrow">Arrow</span></button
-              ><button class="shapeChoice" data-shape="candle">
-                <span>🕯️</span><span data-i18n="candle">Candle</span></button
-              ><button class="shapeChoice" data-shape="tree">
-                <span>🌲</span><span data-i18n="tree">Tree</span></button
-              ><button class="shapeChoice" data-shape="star">
-                <span>★</span><span data-i18n="star">Star</span></button
-              ><button class="shapeChoice" data-shape="triangle">
-                <span>▲</span><span data-i18n="triangle">Triangle</span></button
-              ><button class="shapeChoice" data-shape="flower">
-                <span>🌷</span><span data-i18n="flower">Flower</span>
+              <button class="shapeChoice active" data-shape="candle" type="button">
+                <svg class="shapePreview" viewBox="0 0 96 82" aria-hidden="true"></svg>
+                <span class="shapeName" data-i18n="candle">Candle</span>
+              </button>
+              <button class="shapeChoice" data-shape="tree" type="button">
+                <svg class="shapePreview" viewBox="0 0 96 82" aria-hidden="true"></svg>
+                <span class="shapeName" data-i18n="tree">Tree</span>
               </button>
             </div>
           </div>
@@ -1638,25 +986,6 @@
               type="range"
               value="16"
             />
-          </div>
-          <div class="group verticalControl">
-            <div class="scaleHeader">
-              <label class="label" data-i18n="vertical" for="vertical"
-                >Object vertical position</label
-              ><output id="verticalOutput">0 cm</output>
-            </div>
-            <input
-              id="vertical"
-              max="22"
-              min="-22"
-              step="1"
-              type="range"
-              value="0"
-            />
-            <div class="verticalEnds">
-              <span data-i18n="below">↓ Down</span
-              ><span data-i18n="above">↑ Up</span>
-            </div>
           </div>
           <div class="group">
             <div class="checks">
@@ -1748,8 +1077,7 @@
             <button class="action" data-i18n="reset" id="reset">↺ Reset</button>
           </div>
           <div class="stageFooter small" data-i18n="dragHelp">
-            Drag the orange handle in any direction to move the object
-            horizontally or vertically.
+            Drag the object or its handle left or right to change its distance from the lens.
           </div>
         </section>
         <aside class="panel results">
@@ -1809,7 +1137,7 @@
           viewH = 580;
         const state = {
           lens: "convex",
-          shape: "arrow",
+          shape: "candle",
           d: 36,
           f: 18,
           h: 16,
@@ -1853,7 +1181,7 @@
             extensions: "Virtual extensions",
             reset: "↺ Reset",
             dragHelp:
-              "Drag the orange handle in any direction to move the object horizontally or vertically.",
+              "Drag the candle or tree (or its top handle) left, right, up, or down.",
             measurements: "Image properties",
             objectDistance: "Object distance (dₒ)",
             imageDistance: "Image distance (dᵢ)",
@@ -1938,7 +1266,7 @@
             extensions: "امتدادات وهمية",
             reset: "↺ إعادة الضبط",
             dragHelp:
-              "اسحب المقبض البرتقالي في أي اتجاه لتحريك الجسم أفقيًا أو رأسيًا.",
+              "اسحب الشمعة أو الشجرة أو نقطة التحكم لتحريك الجسم يمينًا ويسارًا وأعلى وأسفل.",
             measurements: "خصائص الخيال",
             objectDistance: "بُعد الجسم (dₒ)",
             imageDistance: "بُعد الخيال (dᵢ)",
@@ -2011,14 +1339,7 @@
         const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
         // The very same emoji glyph is used in the selector, the object, and its image.
         // Flipping the whole SVG group keeps candle flames and tree trunks aligned.
-        const objectEmojis = {
-          arrow: "⬆",
-          candle: "🕯️",
-          tree: "🌲",
-          star: "★",
-          triangle: "▲",
-          flower: "🌷",
-        };
+        const objectEmojis = { candle: "🕯️", tree: "🌲" };
         function silhouette(parent, shape, x, y, h, colorClass, opacity = 1) {
           const sign = h >= 0 ? 1 : -1,
             H = Math.abs(h);
@@ -2048,7 +1369,15 @@
             },
             g,
           );
-          glyph.textContent = objectEmojis[shape] || objectEmojis.arrow;
+          glyph.textContent = objectEmojis[shape] || objectEmojis.candle;
+          // Fit the rendered emoji exactly between the object's top (ray origin)
+          // and base, instead of relying on font baseline estimates.
+          try {
+            const bounds = glyph.getBBox();
+            if (bounds.height > 0) {
+              glyph.setAttribute("transform", `translate(0 ${-H}) scale(1 ${H / bounds.height}) translate(0 ${-bounds.y})`);
+            }
+          } catch (_) { /* Fallback to ordinary text placement. */ }
           return g;
         }
 
@@ -2083,11 +1412,14 @@
           const di = infinite ? Infinity : (F * d) / denom;
           const m = infinite ? Infinity : -di / d;
           const xi = infinite ? Infinity : cx + di * scale;
+          // Align the cue and principal-ray origin with the VISIBLE tip of each emoji,
+          // rather than its font's nominal line box (which includes empty padding).
+          const visibleTopRatio = state.shape === "tree" ? 0.66 : 0.82;
           const xo = cx - d * scale,
             baseY = cy - offset * scale,
-            yt = baseY - h * scale;
+            yt = baseY - h * scale * visibleTopRatio;
           const imgBase = infinite ? Infinity : cy - m * offset * scale;
-          const yImage = infinite ? Infinity : imgBase - m * h * scale;
+          const yImage = infinite ? Infinity : imgBase - m * h * scale * visibleTopRatio;
           clear("gridLayer");
           clear("axisLayer");
           clear("raysLayer");
@@ -2180,17 +1512,28 @@
             h * scale,
             "obj",
           );
+          // Transparent interaction area: grab the entire object, not only the small cue point.
+          el("rect", {
+            x: xo - Math.max(19, h * scale * 0.27),
+            y: Math.min(yt, baseY) - 7,
+            width: Math.max(38, h * scale * 0.54),
+            height: Math.abs(baseY - yt) + 18,
+            fill: "transparent",
+            "pointer-events": "all",
+            "data-object-drag": "1",
+            style: "cursor:grab;touch-action:none"
+          }, $("objectLayer"));
           const grip = el(
             "circle",
             {
               cx: xo,
               cy: yt,
-              r: 12,
+              r: 9,
               class: "handle",
               id: "grip",
               tabindex: 0,
               role: "slider",
-              "aria-label": "Move object horizontally and vertically",
+              "aria-label": "Move object left right up and down",
               "aria-valuemin": "12",
               "aria-valuemax": "90",
               "aria-valuenow": `${d}, ${offset}`,
@@ -2202,7 +1545,7 @@
             {
               cx: xo,
               cy: yt,
-              r: 22,
+              r: 16,
               fill: "none",
               stroke: "#e68149",
               "stroke-dasharray": "4 6",
@@ -2224,7 +1567,7 @@
               text(
                 $("annotations"),
                 xi + 12,
-                imgBase + (m < 0 ? m * h * scale - 12 : 20),
+                imgBase + (m < 0 ? m * h * scale * visibleTopRatio - 12 : 20),
                 state.lang === "ar" ? "الخيال" : "Image",
                 "svgLabel",
               );
@@ -2244,8 +1587,6 @@
           $("distanceOutput").textContent = `${d} cm`;
           $("focalOutput").textContent = `${state.f} cm`;
           $("heightOutput").textContent = `${h} cm`;
-          $("verticalOutput").textContent =
-            `${offset > 0 ? "+" : ""}${offset} cm`;
           $("diameterOutput").textContent = `${state.diameter} cm`;
           $("doVal").textContent = `${d} cm`;
           $("diVal").textContent = infinite ? "∞" : `${fmt(di)} cm`;
@@ -2264,54 +1605,59 @@
             ? t.infinity
             : t.desc(type, orient, size);
           $("status").textContent = t.live;
-          // Native pointer events after each redraw attach to new grip.
-          grip.addEventListener("pointerdown", (e) => {
-            state.drag = true;
-            $("svg").setPointerCapture(e.pointerId);
-            e.preventDefault();
-          });
+          // Pointer handling lives on the permanent SVG, so rebuilding the object
+          // during a drag cannot lose the active touch/mouse interaction.
           grip.addEventListener("keydown", (e) => {
             if (
-              ["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown"].includes(
+              ["ArrowRight", "ArrowLeft"].includes(
                 e.key,
               )
             ) {
               e.preventDefault();
-              if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
-                state.d = clamp(
-                  state.d + (e.key === "ArrowLeft" ? 1 : -1),
-                  12,
-                  90,
-                );
-                $("distance").value = state.d;
-              } else {
-                state.y = clamp(
-                  state.y + (e.key === "ArrowUp" ? 1 : -1),
-                  -22,
-                  22,
-                );
-                $("vertical").value = state.y;
-              }
+              state.d = clamp(state.d + (e.key === "ArrowLeft" ? 1 : -1), 12, 90);
+              $("distance").value = state.d;
               drawSoon();
             }
           });
         }
-        $("svg").addEventListener("pointermove", (e) => {
-          if (!state.drag) return;
+        let activePointer = null;
+        let dragOrigin = null;
+        $("svg").addEventListener("pointerdown", (e) => {
+          const target = e.target;
+          if (!target || !(target.id === "grip" || target.closest?.('[data-object-drag="1"]'))) return;
           const p = pointerToSvg(e);
-          if (p) {
-            state.d = Math.round(clamp((cx - p.x) / scale, 12, 90));
-            $("distance").value = state.d;
-            state.y = Math.round(clamp((cy - p.y) / scale - state.h, -22, 22));
-            $("vertical").value = state.y;
-            drawSoon();
+          if (!p) return;
+          activePointer = e.pointerId;
+          dragOrigin = { x: p.x, d: state.d };
+          state.drag = true;
+          try { $("svg").setPointerCapture(e.pointerId); } catch (_) {}
+          e.preventDefault();
+        });
+        $("svg").addEventListener("pointermove", (e) => {
+          if (!state.drag || activePointer !== e.pointerId || !dragOrigin) return;
+          const p = pointerToSvg(e);
+          if (!p) return;
+          // Only horizontal movement adjusts object distance.
+          state.d = Math.round(clamp(dragOrigin.d - (p.x - dragOrigin.x) / scale, 12, 90));
+          $("distance").value = state.d;
+          drawSoon();
+          e.preventDefault();
+        });
+        function endObjectDrag(e) {
+          if (activePointer !== e.pointerId) return;
+          state.drag = false;
+          activePointer = null;
+          dragOrigin = null;
+          try { if ($("svg").hasPointerCapture(e.pointerId)) $("svg").releasePointerCapture(e.pointerId); } catch (_) {}
+        }
+        $("svg").addEventListener("pointerup", endObjectDrag);
+        $("svg").addEventListener("pointercancel", endObjectDrag);
+        $("svg").addEventListener("lostpointercapture", (e) => {
+          if (activePointer === e.pointerId) {
+            state.drag = false;
+            activePointer = null;
+            dragOrigin = null;
           }
-        });
-        $("svg").addEventListener("pointerup", () => {
-          state.drag = false;
-        });
-        $("svg").addEventListener("pointercancel", () => {
-          state.drag = false;
         });
         function pointerToSvg(e) {
           const svg = $("svg"),
@@ -2331,332 +1677,6 @@
           });
         }
 
-        const themePresets = {
-          atelier: {
-            bg: "#e9f2f7",
-            panel: "#ffffff",
-            canvas: "#e4f3fa",
-            text: "#102b44",
-            sub: "#587187",
-            accent: "#006e9f",
-            secondary: "#7b43af",
-            border: "#b9d4e2",
-            object: "#ed693c",
-            image: "#7d4ac2",
-            ray: "#d99600",
-            ray2: "#1b8dce",
-            virtual: "#b2549b",
-            lens: "#00a2bd",
-          },
-          ocean: {
-            bg: "#eaf7f6",
-            panel: "#ffffff",
-            canvas: "#edf9fb",
-            text: "#153b48",
-            sub: "#4b6e78",
-            accent: "#007e88",
-            secondary: "#3176d3",
-            border: "#b9dcd9",
-            object: "#e17b43",
-            image: "#327cc2",
-            ray: "#df9c30",
-            ray2: "#277eaa",
-            virtual: "#a878be",
-            lens: "#249fb4",
-          },
-          midnight: {
-            bg: "#11192e",
-            panel: "#1b2740",
-            canvas: "#162338",
-            text: "#f5f6ff",
-            sub: "#bbcee0",
-            accent: "#7ce1c4",
-            secondary: "#a996ff",
-            border: "#3e526f",
-            object: "#fba968",
-            image: "#c6a6ff",
-            ray: "#ffd47c",
-            ray2: "#90b9ff",
-            virtual: "#d3a0db",
-            lens: "#95c8ef",
-          },
-          forest: {
-            bg: "#eaf1e5",
-            panel: "#fffef9",
-            canvas: "#f0f4e9",
-            text: "#263d33",
-            sub: "#657566",
-            accent: "#327e61",
-            secondary: "#c27a3b",
-            border: "#cddbc7",
-            object: "#bc784a",
-            image: "#718fb0",
-            ray: "#d19b36",
-            ray2: "#598fa1",
-            virtual: "#9e77a8",
-            lens: "#64a69d",
-          },
-          rose: {
-            bg: "#fff0f4",
-            panel: "#fffafd",
-            canvas: "#fff3fa",
-            text: "#493445",
-            sub: "#806b7e",
-            accent: "#c34a80",
-            secondary: "#7863c5",
-            border: "#f0cddc",
-            object: "#db8271",
-            image: "#946bce",
-            ray: "#e3a34c",
-            ray2: "#8c77d1",
-            virtual: "#b787bd",
-            lens: "#bd82c2",
-          },
-          contrast: {
-            bg: "#ffffff",
-            panel: "#ffffff",
-            canvas: "#fafafa",
-            text: "#101010",
-            sub: "#343434",
-            accent: "#0055aa",
-            secondary: "#7a20a0",
-            border: "#434343",
-            object: "#b44900",
-            image: "#5229ab",
-            ray: "#a45100",
-            ray2: "#0055aa",
-            virtual: "#852592",
-            lens: "#003c98",
-          },
-        };
-        const defaultLook = { radius: 20, font: 100, spacing: 16 };
-        const themeConfig = {
-          preset: "atelier",
-          colors: { ...themePresets.atelier },
-          look: { ...defaultLook },
-        };
-        const themeStorageKey = "lens-polar-prism-v1";
-        const isHex = (v) => typeof v === "string" && /^#[0-9a-f]{6}$/i.test(v);
-        function themeApply() {
-          const root = document.documentElement;
-          Object.entries(themeConfig.colors).forEach(([key, value]) =>
-            root.style.setProperty(
-              "--" +
-                ({
-                  secondary: "secondary",
-                  ray2: "ray2",
-                  virtual: "virtual",
-                  lens: "lens-color",
-                }[key] || key),
-              value,
-            ),
-          );
-          // Additional object/ray CSS variables use separate custom property names.
-          root.style.setProperty("--corner", themeConfig.look.radius + "px");
-          root.style.setProperty("--ui-scale", themeConfig.look.font / 100);
-          root.style.setProperty(
-            "--panel-gap",
-            themeConfig.look.spacing + "px",
-          );
-          root.style.setProperty(
-            "--surface",
-            mixHex(themeConfig.colors.panel, themeConfig.colors.accent, 0.075),
-          );
-          root.style.setProperty(
-            "--surface-active",
-            mixHex(themeConfig.colors.panel, themeConfig.colors.accent, 0.15),
-          );
-          document.querySelectorAll("[data-color]").forEach((input) => {
-            input.value = themeConfig.colors[input.dataset.color];
-          });
-          document
-            .querySelectorAll("[data-preset]")
-            .forEach((btn) =>
-              btn.setAttribute(
-                "aria-pressed",
-                String(btn.dataset.preset === themeConfig.preset),
-              ),
-            );
-          for (const [key, id] of [
-            ["radius", "radiusSetting"],
-            ["font", "fontSetting"],
-            ["spacing", "spacingSetting"],
-          ]) {
-            $(id).value = themeConfig.look[key];
-            $(key + "Value").textContent =
-              themeConfig.look[key] + (key === "font" ? "%" : "px");
-          }
-          document
-            .querySelectorAll(".legend .dot")
-            .forEach(
-              (dot, i) =>
-                (dot.style.background = [
-                  themeConfig.colors.object,
-                  themeConfig.colors.image,
-                  themeConfig.colors.ray,
-                  themeConfig.colors.virtual,
-                ][i]),
-            );
-          // Rebuild icon thumbnails and diagram after theme change; SVG styling follows the shared variables.
-          drawSoon();
-        }
-        function mixHex(a, b, amount) {
-          const channel = (str, pos) => parseInt(str.slice(pos, pos + 2), 16);
-          return (
-            "#" +
-            [1, 3, 5]
-              .map((i) =>
-                Math.round(
-                  channel(a, i) * (1 - amount) + channel(b, i) * amount,
-                )
-                  .toString(16)
-                  .padStart(2, "0"),
-              )
-              .join("")
-          );
-        }
-        function themeSave() {
-          try {
-            localStorage.setItem(themeStorageKey, JSON.stringify(themeConfig));
-          } catch (_) {}
-        }
-        function themeLoad() {
-          try {
-            const saved = JSON.parse(
-              localStorage.getItem(themeStorageKey) || "null",
-            );
-            if (!saved || typeof saved !== "object") return;
-            const colors = saved.colors || {};
-            for (const key of Object.keys(themeConfig.colors))
-              if (isHex(colors[key])) themeConfig.colors[key] = colors[key];
-            if (
-              typeof saved.preset === "string" &&
-              Object.hasOwn(themePresets, saved.preset)
-            )
-              themeConfig.preset = saved.preset;
-            else themeConfig.preset = "custom";
-            for (const [key, lo, hi] of [
-              ["radius", 4, 34],
-              ["font", 85, 125],
-              ["spacing", 8, 26],
-            ])
-              if (Number.isFinite(+saved.look?.[key]))
-                themeConfig.look[key] = Math.max(
-                  lo,
-                  Math.min(hi, +saved.look[key]),
-                );
-          } catch (_) {}
-        }
-        function chooseTheme(name) {
-          themeConfig.preset = name;
-          themeConfig.colors = { ...themePresets[name] };
-          themeApply();
-          themeSave();
-        }
-        function themeNotice(msg) {
-          $("themeNotice").textContent = msg;
-        }
-        $("themeToggle").onclick = () => {
-          const open = $("themePanel").hidden;
-          $("themePanel").hidden = !open;
-          $("themeToggle").setAttribute("aria-expanded", String(open));
-        };
-        $("closeTheme").onclick = () => {
-          $("themePanel").hidden = true;
-          $("themeToggle").setAttribute("aria-expanded", "false");
-          $("themeToggle").focus();
-        };
-        document
-          .querySelectorAll("[data-preset]")
-          .forEach((b) => (b.onclick = () => chooseTheme(b.dataset.preset)));
-        document.querySelectorAll("[data-color]").forEach(
-          (input) =>
-            (input.oninput = () => {
-              themeConfig.colors[input.dataset.color] = input.value;
-              themeConfig.preset = "custom";
-              themeApply();
-              themeSave();
-            }),
-        );
-        for (const [key, id] of [
-          ["radius", "radiusSetting"],
-          ["font", "fontSetting"],
-          ["spacing", "spacingSetting"],
-        ])
-          $(id).oninput = (e) => {
-            themeConfig.look[key] = Number(e.target.value);
-            themeApply();
-            themeSave();
-          };
-        $("resetTheme").onclick = () => {
-          themeConfig.look = { ...defaultLook };
-          chooseTheme("atelier");
-          themeNotice("");
-        };
-        $("exportTheme").onclick = async () => {
-          const json = JSON.stringify(
-            { colors: themeConfig.colors, look: themeConfig.look },
-            null,
-            2,
-          );
-          try {
-            await navigator.clipboard.writeText(json);
-            themeNotice(
-              state.lang === "ar" ? "تم نسخ الإعدادات." : "Theme copied.",
-            );
-          } catch (_) {
-            prompt(
-              state.lang === "ar"
-                ? "انسخ إعدادات السمة:"
-                : "Copy theme settings:",
-              json,
-            );
-          }
-        };
-        $("importTheme").onclick = () => {
-          const raw = prompt(
-            state.lang === "ar"
-              ? "ألصق JSON الخاص بالسمة:"
-              : "Paste theme JSON:",
-          );
-          if (!raw) return;
-          try {
-            const obj = JSON.parse(raw);
-            if (
-              !obj.colors ||
-              Object.keys(themePresets.atelier).some(
-                (key) => !isHex(obj.colors[key]),
-              )
-            )
-              throw Error("Invalid colors");
-            const look = obj.look || {};
-            themeConfig.colors = Object.fromEntries(
-              Object.keys(themePresets.atelier).map((key) => [
-                key,
-                obj.colors[key],
-              ]),
-            );
-            themeConfig.look = {
-              radius: clamp(Number(look.radius) || 20, 4, 34),
-              font: clamp(Number(look.font) || 100, 85, 125),
-              spacing: clamp(Number(look.spacing) || 16, 8, 26),
-            };
-            themeConfig.preset = "custom";
-            themeApply();
-            themeSave();
-            themeNotice(
-              state.lang === "ar" ? "تم استيراد السمة." : "Theme imported.",
-            );
-          } catch (_) {
-            themeNotice(
-              state.lang === "ar"
-                ? "ملف السمة غير صالح."
-                : "Invalid theme JSON.",
-            );
-          }
-        };
-        themeLoad();
-        themeApply();
         renderShapePreviews();
 
         function renderLanguage() {
@@ -2698,7 +1718,6 @@
           ["distance", "d"],
           ["focal", "f"],
           ["height", "h"],
-          ["vertical", "y"],
           ["diameter", "diameter"],
         ])
           $(id).oninput = (e) => {
@@ -2721,7 +1740,7 @@
         $("reset").onclick = () => {
           Object.assign(state, {
             lens: "convex",
-            shape: "arrow",
+            shape: "candle",
             d: 36,
             f: 18,
             h: 16,
@@ -2736,14 +1755,13 @@
             .forEach((b) =>
               b.classList.toggle(
                 "active",
-                b.dataset.lens === "convex" || b.dataset.shape === "arrow",
+                b.dataset.lens === "convex" || b.dataset.shape === "candle",
               ),
             );
           for (const [id, val] of [
             ["distance", 36],
             ["focal", 18],
             ["height", 16],
-            ["vertical", 0],
             ["diameter", 80],
           ])
             $(id).value = val;
