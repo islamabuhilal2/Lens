@@ -1,0 +1,2758 @@
+<!doctype html>
+
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+      name="viewport"
+    />
+    <title>Exploring Lenses</title>
+    <style>
+      :root {
+        --bg: #101824;
+        --panel: #1a2533;
+        --panel2: #202e3c;
+        --text: #f3f5f8;
+        --sub: #a9bac8;
+        --accent: #75dfc0;
+        --gold: #ffd080;
+        --blue: #78baff;
+        --pink: #ff9bad;
+        --border: #364556;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 70% -15%, #294355 0, transparent 42%),
+          var(--bg);
+        font-family: system-ui, "Segoe UI", Tahoma, Arial, sans-serif;
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .wrap {
+        max-width: 1600px;
+        margin: auto;
+        padding: 20px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin: 0 0 19px;
+      }
+      h1 {
+        font-size: clamp(23px, 2.5vw, 34px);
+        margin: 0;
+      }
+      header p {
+        color: var(--sub);
+        margin: 3px 0 0;
+      }
+      .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .brandIcon {
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        width: 54px;
+        height: 54px;
+        background: #305f61;
+        color: #b5ffde;
+        font-size: 28px;
+      }
+      .pill {
+        border-radius: 20px;
+        background: #254840;
+        padding: 9px 15px;
+        color: #adffdc;
+        font-size: 13px;
+        white-space: nowrap;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(230px, 285px) minmax(0, 1fr) minmax(
+            260px,
+            300px
+          );
+        gap: 16px;
+        align-items: start;
+      }
+      .panel {
+        background: linear-gradient(160deg, #1d2938, #182330);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 19px;
+        box-shadow: 0 16px 50px #0002;
+        min-width: 0;
+      }
+      .panel h2 {
+        font-size: 17px;
+        margin: 0 0 15px;
+      }
+      .label {
+        display: block;
+        color: var(--sub);
+        font-size: 13px;
+        font-weight: 650;
+        margin-bottom: 9px;
+      }
+      .group {
+        margin-bottom: 23px;
+      }
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .choice,
+      .shapeChoice,
+      .action {
+        background: #243444;
+        border: 1px solid #425365;
+        color: var(--text);
+        border-radius: 12px;
+        padding: 10px 8px;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          transform 0.2s;
+      }
+      .choice:hover,
+      .shapeChoice:hover,
+      .action:hover {
+        background: #314556;
+      }
+      .choice.active,
+      .shapeChoice.active {
+        background: #20554e;
+        border-color: var(--accent);
+        box-shadow: inset 0 0 0 1px #75dfc055;
+      }
+      .choice svg {
+        display: block;
+        margin: 0 auto 5px;
+      }
+      .shapes {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      .shapes > .shapeChoice {
+        min-width: 0;
+        width: 100%;
+        overflow: hidden;
+        overflow-wrap: anywhere;
+      }
+      .shapeChoice span:last-child {
+        font-size: 12px;
+        line-height: 1.4;
+      }
+      .shapeChoice {
+        min-height: 78px;
+        font-size: 12px;
+      }
+      .shapeChoice span {
+        display: block;
+        font-size: 27px;
+        line-height: 33px;
+      }
+      .scaleHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+      }
+      .scaleHeader output {
+        font-size: 13px;
+        color: var(--accent);
+        font-variant-numeric: tabular-nums;
+      }
+      input[type="range"] {
+        width: 100%;
+        accent-color: var(--accent);
+        cursor: pointer;
+        margin: 10px 0;
+      }
+      .checks {
+        display: grid;
+        gap: 11px;
+      }
+      .checks label {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: var(--sub);
+        font-size: 13px;
+        cursor: pointer;
+      }
+      .checks input {
+        accent-color: var(--accent);
+        width: 17px;
+        height: 17px;
+      }
+      .stagePanel {
+        padding: 15px;
+      }
+      .stageHeader,
+      .stageFooter {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 4px 6px 13px;
+      }
+      .stageHeader h2 {
+        margin: 0;
+      }
+      .small {
+        font-size: 12px;
+        color: var(--sub);
+      }
+      .live {
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .stage {
+        position: relative;
+        aspect-ratio: 1.56;
+        min-height: 350px;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid #415364;
+        background: linear-gradient(#1a3445, #132735);
+        touch-action: none;
+      }
+      .stage svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+        user-select: none;
+      }
+      .stageFooter {
+        padding: 12px 4px 3px;
+      }
+      .action {
+        padding: 9px 12px;
+        font-size: 12px;
+      }
+      .primary {
+        background: #24705f;
+        border-color: #54c8ab;
+      }
+      .metrics {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .metric {
+        border: 1px solid #3a4d5c;
+        background: #233341;
+        border-radius: 13px;
+        padding: 12px;
+        min-width: 0;
+      }
+      .metric .name {
+        font-size: 11px;
+        color: var(--sub);
+      }
+      .metric strong {
+        display: block;
+        color: #f2f8fb;
+        font-size: 21px;
+        margin-top: 5px;
+        direction: ltr;
+        text-align: left;
+      }
+      .result {
+        border: 1px solid #376459;
+        background: #1e3b3a;
+        border-radius: 14px;
+        padding: 15px;
+        margin-top: 14px;
+      }
+      .result h3 {
+        font-size: 14px;
+        color: #9ff1d7;
+        margin: 0 0 8px;
+      }
+      .result p {
+        font-size: 13px;
+        line-height: 1.8;
+        margin: 0;
+      }
+      .formula {
+        border-radius: 14px;
+        background: #253647;
+        padding: 15px;
+        margin: 15px 0;
+        text-align: center;
+        direction: ltr;
+        font-family: Georgia, serif;
+        font-size: 20px;
+      }
+      .note {
+        font-size: 13px;
+        color: var(--sub);
+        line-height: 1.8;
+      }
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        font-size: 12px;
+        color: var(--sub);
+      }
+      .legend span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .dot {
+        display: inline-block;
+        width: 16px;
+        height: 3px;
+        border-radius: 3px;
+      }
+      .footer {
+        margin-top: 16px;
+        color: #8194a4;
+        font-size: 12px;
+        text-align: center;
+      }
+      .axis {
+        stroke: #849ba9;
+        stroke-width: 1.5;
+      }
+      .gridline {
+        stroke: #b5d9e0;
+        stroke-width: 0.5;
+        opacity: 0.1;
+      }
+      .mainRay {
+        fill: none;
+        stroke: var(--gold);
+        stroke-width: 2.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .ray2 {
+        stroke: var(--blue);
+      }
+      .virtualRay {
+        fill: none;
+        stroke: #ffb28e;
+        stroke-width: 1.7;
+        stroke-dasharray: 5 6;
+        opacity: 0.9;
+      }
+      .obj {
+        fill: #7fe1bb;
+        stroke: #cbffea;
+        stroke-width: 1.3;
+        filter: drop-shadow(0px 3px 6px #0006);
+      }
+      .imageObj {
+        fill: #ff9bad;
+        stroke: #ffced8;
+        stroke-width: 1.3;
+        opacity: 0.84;
+      }
+      .lens {
+        fill: url(#lensGradient);
+        stroke: #9edafa;
+        stroke-width: 2.5;
+        filter: drop-shadow(0px 0px 9px #8dccff55);
+      }
+      .focus {
+        fill: #efc877;
+      }
+      .svgLabel {
+        fill: #c5d8e0;
+        font:
+          12px system-ui,
+          "Segoe UI",
+          sans-serif;
+      }
+      .handle {
+        fill: #fff;
+        stroke: #50dcb5;
+        stroke-width: 3;
+        cursor: grab;
+        filter: drop-shadow(0 2px 5px #0007);
+      }
+      .handle:active {
+        cursor: grabbing;
+      }
+      .flow {
+        stroke-dasharray: 8 12;
+        animation: beam 1.4s linear infinite;
+      }
+      @keyframes beam {
+        to {
+          stroke-dashoffset: -40;
+        }
+      }
+      @media (max-width: 1120px) {
+        .layout {
+          grid-template-columns: 260px minmax(0, 1fr);
+        }
+        .results {
+          grid-column: 1/-1;
+        }
+        .results .content {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+        }
+        .result {
+          margin-top: 0;
+        }
+      }
+      @media (max-width: 720px) {
+        .wrap {
+          padding: 11px;
+        }
+        .layout {
+          grid-template-columns: 1fr;
+          gap: 11px;
+        }
+        .panel {
+          padding: 14px;
+        }
+        .stagePanel {
+          grid-row: 1;
+        }
+        .stage {
+          aspect-ratio: 1.18;
+          min-height: 300px;
+        }
+        .results {
+          grid-column: auto;
+        }
+        .results .content {
+          display: block;
+        }
+        .result {
+          margin-top: 14px;
+        }
+        header {
+          align-items: flex-start;
+          flex-wrap: wrap;
+        }
+        .pill {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          padding: 8px 12px;
+        }
+        .brand {
+          min-width: 0;
+          flex: 1 1 220px;
+        }
+        .group {
+          margin-bottom: 16px;
+        }
+        .controls {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          column-gap: 15px;
+        }
+        .controls h2 {
+          grid-column: 1/-1;
+        }
+        .controls .group:first-of-type,
+        .controls .group:nth-of-type(2),
+        .controls .group:last-of-type {
+          grid-column: 1/-1;
+        }
+        .shapeChoice {
+          min-height: 65px;
+        }
+        .stageHeader h2 {
+          font-size: 16px;
+        }
+      }
+      @media (max-width: 420px) {
+        .controls {
+          grid-template-columns: 1fr;
+        }
+        .controls .group {
+          grid-column: 1/-1;
+        }
+        .stage {
+          aspect-ratio: 1;
+          min-height: 260px;
+        }
+        .shapeChoice {
+          min-height: 68px;
+        }
+        .wrap {
+          padding: 8px;
+        }
+        .stagePanel {
+          padding: 9px;
+        }
+        .stageHeader {
+          gap: 5px;
+        }
+        .metrics {
+          gap: 6px;
+        }
+        .metric {
+          padding: 9px;
+        }
+        .metric strong {
+          font-size: 17px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .flow {
+          animation: none;
+        }
+        * {
+          scroll-behavior: auto !important;
+          transition: none !important;
+        }
+      }
+
+      /* LENS ATELIER — complete warm editorial re-theme */
+      :root {
+        --bg: #f5f0e8;
+        --panel: #fffdf9;
+        --panel2: #faf5ed;
+        --text: #302a42;
+        --sub: #746e82;
+        --accent: #cc6d45;
+        --gold: #e2a347;
+        --blue: #7869ba;
+        --pink: #8d7ccb;
+        --border: #e5daca;
+      }
+      body {
+        background:
+          radial-gradient(ellipse at 8% 0%, #fff0d9 0, transparent 48%),
+          radial-gradient(ellipse at 95% 90%, #e5ddf7 0, transparent 40%),
+          #f5f0e8;
+        color: var(--text);
+      }
+      .wrap {
+        max-width: 1620px;
+        padding: clamp(12px, 2vw, 30px);
+      }
+      header {
+        padding: 5px 4px 9px;
+        border-bottom: 1px solid #e3d9cc;
+        margin-bottom: 22px;
+      }
+      header p {
+        color: #756c80;
+      }
+      .brandIcon {
+        background: linear-gradient(135deg, #e99b6b, #b86875);
+        color: white;
+        box-shadow: 0 9px 25px #b8615d30;
+        border-radius: 18px;
+        transform: rotate(-8deg);
+      }
+      h1 {
+        letter-spacing: -0.8px;
+        color: #352d4b;
+      }
+      .pill {
+        background: #fffdf9;
+        border: 1px solid #decdbb;
+        color: #9a4f43;
+        box-shadow: 0 5px 15px #8b5e3620;
+        font-weight: 800;
+      }
+      .pill:hover {
+        background: #fff0df;
+      }
+      .panel {
+        background: linear-gradient(150deg, #fffdfa, #fffaf4);
+        border: 1px solid #e5d8cb;
+        box-shadow: 0 14px 40px #765e4e13;
+        border-radius: 23px;
+      }
+      .panel h2 {
+        color: #45365b;
+        font-weight: 850;
+      }
+      .label {
+        color: #63576f;
+        font-weight: 700;
+      }
+      .choice,
+      .shapeChoice,
+      .action {
+        color: #51445f;
+        background: #f9f3eb;
+        border: 1px solid #e6d8c9;
+        border-radius: 14px;
+        box-shadow: 0 2px 0 #f2e7d9;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .choice:hover,
+      .shapeChoice:hover,
+      .action:hover {
+        background: #f7eadb;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px #90705a19;
+      }
+      .choice.active,
+      .shapeChoice.active {
+        background: #fff0e5;
+        border-color: #dc906a;
+        box-shadow:
+          inset 0 0 0 1px #e8a889,
+          0 4px 14px #df916524;
+      }
+      .scaleHeader output {
+        color: #b65c3d;
+        font-weight: 850;
+        background: #fbeee4;
+        padding: 3px 8px;
+        border-radius: 8px;
+      }
+      input[type="range"] {
+        accent-color: #c9734e;
+      }
+      .checks label {
+        color: #655b73;
+      }
+      .checks input {
+        accent-color: #c9734e;
+      }
+      .stage {
+        background: radial-gradient(
+          circle at 35% 22%,
+          #fffdf8 0,
+          #f7f1e6 60%,
+          #eee6dc 100%
+        );
+        border: 1px solid #dfd2c4;
+        box-shadow: inset 0 1px 14px #977b5711;
+      }
+      .stageHeader .live {
+        color: #ac6348;
+        background: #fff0de;
+        padding: 5px 10px;
+        border-radius: 99px;
+      }
+      .metric {
+        background: #f9f3eb;
+        border: 1px solid #e8dacc;
+        border-radius: 15px;
+      }
+      .metric .name,
+      .note,
+      .small,
+      .legend,
+      .footer {
+        color: #7e7486;
+      }
+      .metric strong {
+        color: #45345f;
+      }
+      .result {
+        background: #f5edf8;
+        border-color: #dfcfea;
+      }
+      .result h3 {
+        color: #714f94;
+      }
+      .result p {
+        color: #483d5b;
+      }
+      .formula {
+        background: #fcf1e2;
+        color: #9b5b42;
+        border: 1px solid #f2dcc5;
+      }
+      .axis {
+        stroke: #a99ba5;
+      }
+      .gridline {
+        stroke: #ad98ba;
+        opacity: 0.14;
+      }
+      .mainRay {
+        stroke: #e4a044;
+      }
+      .ray2 {
+        stroke: #7766b9;
+      }
+      .virtualRay {
+        stroke: #b18ac1;
+      }
+      .obj {
+        fill: #e58b50;
+        stroke: #fff0db;
+        filter: drop-shadow(0 3px 5px #ad6b3f40);
+      }
+      .imageObj {
+        fill: #8570c1;
+        stroke: #f0eaff;
+        opacity: 0.88;
+      }
+      .lens {
+        stroke: #9f83c2;
+        filter: drop-shadow(0 0 10px #a48bd255);
+      }
+      .focus {
+        fill: #bd775a;
+      }
+      .svgLabel {
+        fill: #685e73;
+      }
+      .handle {
+        stroke: #c46d46;
+        fill: #fff6eb;
+      }
+      .verticalEnds {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        color: #8d7e90;
+        padding: 0 2px;
+      }
+      .shapes {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+      @media (max-width: 720px) {
+        .stagePanel {
+          grid-row: 1;
+        }
+        .stage {
+          min-height: 280px;
+        }
+        .controls {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .controls .verticalControl {
+          grid-column: auto;
+        }
+      }
+      @media (max-width: 420px) {
+        .controls {
+          grid-template-columns: 1fr;
+        }
+        .controls .group {
+          grid-column: 1/-1;
+        }
+        header {
+          gap: 10px;
+        }
+        .pill {
+          margin-inline-start: auto;
+        }
+        .stage {
+          min-height: 260px;
+        }
+      }
+
+      /* Theme editor and variable-based full UI skin */
+      :root {
+        --canvas: #f7f1e6;
+        --secondary: #7869ba;
+        --object: #e58b50;
+        --image: #8570c1;
+        --ray: #e4a044;
+        --ray2: #7766b9;
+        --virtual: #b18ac1;
+        --lens-color: #9f83c2;
+        --corner: 20px;
+        --ui-scale: 1;
+        --panel-gap: 16px;
+        --surface: #f9f3eb;
+        --surface-active: #fff0e5;
+        --border: #e5daca;
+      }
+      html {
+        font-size: calc(16px * var(--ui-scale));
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+      header {
+        border-color: var(--border);
+      }
+      h1,
+      .panel h2 {
+        color: var(--text);
+      }
+      header p,
+      .label,
+      .small,
+      .note,
+      .legend,
+      .footer,
+      .checks label,
+      .metric .name {
+        color: var(--sub);
+      }
+      .layout {
+        gap: var(--panel-gap);
+      }
+      .panel {
+        background: var(--panel);
+        border-color: var(--border);
+        border-radius: var(--corner);
+        padding: var(--panel-gap);
+      }
+      .choice,
+      .shapeChoice,
+      .action {
+        background: var(--surface);
+        border-color: var(--border);
+        border-radius: calc(var(--corner) * 0.65);
+        color: var(--text);
+      }
+      .choice:hover,
+      .shapeChoice:hover,
+      .action:hover {
+        background: var(--surface-active);
+      }
+      .choice.active,
+      .shapeChoice.active {
+        background: var(--surface-active);
+        border-color: var(--accent);
+        box-shadow: inset 0 0 0 1px var(--accent);
+      }
+      .pill {
+        background: var(--panel);
+        border-color: var(--border);
+        color: var(--accent);
+      }
+      .pill:hover {
+        background: var(--surface-active);
+      }
+      .brandIcon {
+        background: var(--accent);
+        color: var(--panel);
+        box-shadow: none;
+      }
+      .scaleHeader output {
+        color: var(--accent);
+        background: var(--surface);
+      }
+      input[type="range"],
+      .checks input {
+        accent-color: var(--accent);
+      }
+      .stage {
+        background: var(--canvas);
+        border-color: var(--border);
+        border-radius: calc(var(--corner) * 0.85);
+      }
+      .stageHeader .live {
+        background: var(--surface);
+        color: var(--accent);
+      }
+      .metric {
+        background: var(--surface);
+        border-color: var(--border);
+        border-radius: calc(var(--corner) * 0.72);
+      }
+      .metric strong {
+        color: var(--text);
+      }
+      .result {
+        background: var(--surface);
+        border-color: var(--border);
+        border-radius: calc(var(--corner) * 0.72);
+      }
+      .result h3 {
+        color: var(--secondary);
+      }
+      .result p {
+        color: var(--text);
+      }
+      .formula {
+        background: var(--surface-active);
+        border-color: var(--border);
+        color: var(--accent);
+      }
+      .mainRay {
+        stroke: var(--ray);
+      }
+      .mainRay.ray2 {
+        stroke: var(--ray2);
+      }
+      .virtualRay {
+        stroke: var(--virtual);
+      }
+      .obj {
+        fill: var(--object);
+        stroke: var(--panel);
+      }
+      .imageObj {
+        fill: var(--image);
+        stroke: var(--panel);
+      }
+      .lens {
+        stroke: var(--lens-color);
+      }
+      .handle {
+        stroke: var(--accent);
+        fill: var(--panel);
+      }
+      .focus {
+        fill: var(--accent);
+      }
+      .svgLabel {
+        fill: var(--sub);
+      }
+      .axis {
+        stroke: var(--sub);
+      }
+      .shapePreview {
+        display: block !important;
+        width: 92px;
+        height: 76px;
+        max-width: 100%;
+        margin: 0 auto 5px;
+        overflow: visible;
+      }
+      .shapeChoice {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        min-height: 112px;
+      }
+      .shapeChoice .shapePreview + .shapeName {
+        font-size: 0.78rem;
+        line-height: 1.2;
+        font-weight: 750;
+        display: block;
+      }
+      .shapePreview .obj {
+        filter: none;
+        stroke-width: 1.8px;
+      }
+      .headerActions {
+        display: flex;
+        gap: 9px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .themeToggle {
+        font-weight: 800;
+      }
+      .themePanel[hidden] {
+        display: none !important;
+      }
+      .themePanel {
+        background: var(--panel);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: var(--corner);
+        padding: clamp(14px, 2vw, 24px);
+        margin-bottom: 17px;
+        box-shadow: 0 18px 45px #00000013;
+        animation: themeOpen 0.25s ease-out;
+      }
+      @keyframes themeOpen {
+        from {
+          opacity: 0;
+          transform: translateY(-6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .themePanelHead {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .themePanelHead h2 {
+        font-size: 1.2rem;
+        margin: 0;
+      }
+      .themePanelHead p {
+        color: var(--sub);
+        font-size: 0.82rem;
+        margin: 5px 0 0;
+      }
+      .themePanel h3 {
+        font-size: 0.86rem;
+        margin: 0 0 12px;
+        color: var(--text);
+      }
+      .themeBlock {
+        margin-top: 18px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+      }
+      .presetGrid {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .preset {
+        background: var(--surface);
+        color: var(--text);
+        border: 1.5px solid var(--border);
+        border-radius: calc(var(--corner) * 0.65);
+        padding: 12px 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 8px;
+        min-width: 0;
+        font-size: 0.78rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .preset[aria-pressed="true"] {
+        border-color: var(--accent);
+        box-shadow: inset 0 0 0 1px var(--accent);
+      }
+      .preset:hover {
+        border-color: var(--accent);
+      }
+      .swatches {
+        display: flex;
+        gap: 0;
+      }
+      .swatches i {
+        display: block;
+        width: 18px;
+        height: 28px;
+        border: 1px solid #0002;
+      }
+      .swatches i:first-child {
+        border-radius: 7px 0 0 7px;
+      }
+      .swatches i:last-child {
+        border-radius: 0 7px 7px 0;
+      }
+      .colorGrid {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .colorGrid label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-direction: column;
+        text-align: center;
+        min-width: 0;
+        font-size: 0.73rem;
+        color: var(--sub);
+        cursor: pointer;
+      }
+      .colorGrid input[type="color"] {
+        width: min(100%, 76px);
+        height: 39px;
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        background: var(--surface);
+        padding: 3px;
+        cursor: pointer;
+      }
+      .styleGrid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .styleGrid label {
+        min-width: 0;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 5px;
+        font-size: 0.8rem;
+        color: var(--text);
+      }
+      .styleGrid input {
+        grid-column: 1/-1;
+      }
+      .styleGrid output {
+        color: var(--accent);
+      }
+      .themeActions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+      }
+      .themeActions button {
+        font-size: 0.78rem;
+      }
+      .themeActions #themeNotice {
+        color: var(--accent);
+        font-size: 0.8rem;
+      }
+      @media (max-width: 1100px) {
+        .presetGrid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .colorGrid {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 720px) {
+        .headerActions {
+          margin-inline-start: auto;
+        }
+        .presetGrid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .colorGrid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .styleGrid {
+          grid-template-columns: 1fr;
+        }
+        .shapePreview {
+          width: 76px;
+          height: 66px;
+        }
+        .shapeChoice {
+          min-height: 97px;
+        }
+        .panel {
+          padding: var(--panel-gap);
+        }
+      }
+      @media (max-width: 410px) {
+        .headerActions {
+          width: 100%;
+          justify-content: space-between;
+        }
+        .themeToggle,
+        .headerActions #language {
+          flex: 1;
+        }
+        .presetGrid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .colorGrid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .themePanel {
+          animation: none;
+        }
+      }
+
+      /* POLAR PRISM: clean scientific exhibit, not the previous warm-card interface */
+      :root {
+        --bg: #e9f2f7;
+        --panel: #fff;
+        --canvas: #e4f3fa;
+        --text: #102b44;
+        --sub: #587187;
+        --accent: #006e9f;
+        --secondary: #7b43af;
+        --border: #b9d4e2;
+        --object: #ed693c;
+        --image: #7d4ac2;
+        --ray: #d99600;
+        --ray2: #1b8dce;
+        --virtual: #b2549b;
+        --lens-color: #00a2bd;
+      }
+      body {
+        background:
+          radial-gradient(
+            ellipse at 85% -12%,
+            color-mix(in srgb, var(--accent) 15%, transparent),
+            transparent 48%
+          ),
+          repeating-linear-gradient(
+            0deg,
+            transparent 0 31px,
+            color-mix(in srgb, var(--accent) 4%, transparent) 32px
+          ),
+          var(--bg);
+      }
+      .wrap {
+        max-width: 1660px;
+      }
+      header {
+        border-bottom: 2px solid var(--accent);
+        padding: 8px 4px 20px;
+        margin-bottom: 20px;
+      }
+      header h1 {
+        font-weight: 850;
+        letter-spacing: -0.045em;
+      }
+      .brandIcon {
+        border-radius: 12px;
+        transform: rotate(-7deg);
+        box-shadow: 5px 5px 0 var(--secondary);
+      }
+      .panel {
+        box-shadow:
+          0 5px 0 color-mix(in srgb, var(--accent) 9%, transparent),
+          0 13px 34px color-mix(in srgb, var(--text) 7%, transparent);
+        border-width: 1px;
+      }
+      .panel h2 {
+        border-inline-start: 4px solid var(--accent);
+        padding-inline-start: 11px;
+      }
+      .choice,
+      .shapeChoice,
+      .action {
+        box-shadow: none;
+        font-weight: 720;
+      }
+      .choice.active,
+      .shapeChoice.active {
+        box-shadow: inset 0 0 0 2px var(--accent);
+        background: var(--surface-active);
+      }
+      .shapeChoice {
+        min-height: 85px;
+        gap: 0;
+        padding: 9px 5px;
+      }
+      .shapeChoice span:first-child {
+        display: block;
+        font-size: 29px;
+        line-height: 35px;
+        margin-bottom: 3px;
+      }
+      .shapeChoice span:last-child {
+        display: block;
+        font-size: 12px;
+        line-height: 1.3;
+      }
+      .shapes {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .stage {
+        box-shadow: inset 0 0 35px
+          color-mix(in srgb, var(--accent) 8%, transparent);
+      }
+      .stageHeader .live {
+        color: var(--accent);
+      }
+      .metric {
+        border-inline-start: 3px solid var(--secondary);
+      }
+      .result {
+        border-inline-start: 4px solid var(--accent);
+      }
+      .preset {
+        transition:
+          transform 0.18s ease,
+          border-color 0.18s ease;
+      }
+      .preset:hover {
+        transform: translateY(-2px);
+      }
+      @media (max-width: 720px) {
+        .shapeChoice {
+          min-height: 75px;
+        }
+        .shapeChoice span:first-child {
+          font-size: 26px;
+        }
+        .wrap {
+          padding: 12px;
+        }
+        .stagePanel {
+          grid-row: 1;
+        }
+      }
+      @media (max-width: 410px) {
+        .shapeChoice {
+          min-height: 72px;
+        }
+        .shapes {
+          gap: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="brand">
+          <div class="brandIcon">◉</div>
+          <div>
+            <h1 data-i18n="title">Exploring Lenses</h1>
+            <p data-i18n="subtitle">
+              Explore how lenses form images using real ray geometry
+            </p>
+          </div>
+        </div>
+        <div class="headerActions">
+          <button
+            aria-controls="themePanel"
+            aria-expanded="false"
+            class="pill themeToggle"
+            data-i18n="themeButton"
+            id="themeToggle"
+            type="button"
+          >
+            🎨 Customize theme</button
+          ><button aria-label="Switch language" class="pill" id="language">
+            العربية
+          </button>
+        </div>
+      </header>
+      <section
+        aria-label="Theme customization"
+        class="themePanel"
+        hidden=""
+        id="themePanel"
+      >
+        <div class="themePanelHead">
+          <div>
+            <h2 data-i18n="themeHeading">Customize your lab</h2>
+            <p data-i18n="themeDescription">
+              Choose a palette or make every color your own. Saved automatically
+              on this device.
+            </p>
+          </div>
+          <button
+            aria-label="Close"
+            class="action"
+            id="closeTheme"
+            type="button"
+          >
+            ✕
+          </button>
+        </div>
+        <div class="themeBlock">
+          <h3 data-i18n="themePresets">Theme presets</h3>
+          <div class="presetGrid" id="presetGrid">
+            <button class="preset" data-preset="atelier" type="button">
+              <span class="swatches"
+                ><i style="background: #e9f2f7"></i
+                ><i style="background: #006e9f"></i
+                ><i style="background: #7b43af"></i></span
+              ><span data-i18n="presetAtelier">Polar prism</span>
+            </button>
+            <button class="preset" data-preset="ocean" type="button">
+              <span class="swatches"
+                ><i style="background: #eaf7f6"></i
+                ><i style="background: #007e88"></i
+                ><i style="background: #3176d3"></i></span
+              ><span data-i18n="presetOcean">Ocean breeze</span>
+            </button>
+            <button class="preset" data-preset="midnight" type="button">
+              <span class="swatches"
+                ><i style="background: #11192e"></i
+                ><i style="background: #7ce1c4"></i
+                ><i style="background: #a996ff"></i></span
+              ><span data-i18n="presetMidnight">Midnight lab</span>
+            </button>
+            <button class="preset" data-preset="forest" type="button">
+              <span class="swatches"
+                ><i style="background: #eaf1e5"></i
+                ><i style="background: #327e61"></i
+                ><i style="background: #c27a3b"></i></span
+              ><span data-i18n="presetForest">Botanical</span>
+            </button>
+            <button class="preset" data-preset="rose" type="button">
+              <span class="swatches"
+                ><i style="background: #fff0f4"></i
+                ><i style="background: #c34a80"></i
+                ><i style="background: #7863c5"></i></span
+              ><span data-i18n="presetRose">Rose quartz</span>
+            </button>
+            <button class="preset" data-preset="contrast" type="button">
+              <span class="swatches"
+                ><i style="background: #ffffff"></i
+                ><i style="background: #0055aa"></i
+                ><i style="background: #e26c00"></i></span
+              ><span data-i18n="presetContrast">High contrast</span>
+            </button>
+          </div>
+        </div>
+        <div class="themeBlock">
+          <h3 data-i18n="themeColors">Custom colors</h3>
+          <div class="colorGrid" id="themeColors">
+            <label
+              ><span data-i18n="colorBg">Page background</span
+              ><input data-color="bg" type="color"
+            /></label>
+            <label
+              ><span data-i18n="colorPanel">Cards / panels</span
+              ><input data-color="panel" type="color"
+            /></label>
+            <label
+              ><span data-i18n="colorCanvas">Diagram canvas</span
+              ><input data-color="canvas" type="color"
+            /></label>
+            <label
+              ><span data-i18n="colorText">Main text</span
+              ><input data-color="text" type="color"
+            /></label>
+            <label
+              ><span data-i18n="colorSub">Secondary text</span
+              ><input data-color="sub" type="color"
+            /></label>
+            <label
+              ><span data-i18n="colorAccent">Primary accent</span
+              ><input data-color="accent" type="color"
+            /></label>
+            <label
+              ><span data-i18n="colorSecondary">Secondary accent</span
+              ><input data-color="secondary" type="color"
+            /></label>
+            <label
+              ><span data-i18n="colorBorder">Borders</span
+              ><input data-color="border" type="color"
+            /></label>
+            <label
+              ><span data-i18n="colorObject">Object</span
+              ><input data-color="object" type="color"
+            /></label>
+            <label
+              ><span data-i18n="colorImage">Image</span
+              ><input data-color="image" type="color"
+            /></label>
+            <label
+              ><span data-i18n="colorRay">Main light ray</span
+              ><input data-color="ray" type="color"
+            /></label>
+            <label
+              ><span data-i18n="colorRay2">Secondary ray</span
+              ><input data-color="ray2" type="color"
+            /></label>
+            <label
+              ><span data-i18n="colorVirtual">Virtual rays</span
+              ><input data-color="virtual" type="color"
+            /></label>
+            <label
+              ><span data-i18n="colorLens">Lens outline</span
+              ><input data-color="lens" type="color"
+            /></label>
+          </div>
+        </div>
+        <div class="themeBlock">
+          <h3 data-i18n="themeLook">Appearance</h3>
+          <div class="styleGrid">
+            <label
+              ><span data-i18n="roundness">Corner roundness</span
+              ><input
+                id="radiusSetting"
+                max="34"
+                min="4"
+                type="range"
+                value="20"
+              /><output id="radiusValue">20px</output></label
+            >
+            <label
+              ><span data-i18n="fontScale">Interface text size</span
+              ><input
+                id="fontSetting"
+                max="125"
+                min="85"
+                step="5"
+                type="range"
+                value="100"
+              /><output id="fontValue">100%</output></label
+            >
+            <label
+              ><span data-i18n="spacing">Panel spacing</span
+              ><input
+                id="spacingSetting"
+                max="26"
+                min="8"
+                type="range"
+                value="16"
+              /><output id="spacingValue">16px</output></label
+            >
+          </div>
+        </div>
+        <div class="themeActions">
+          <button
+            class="action"
+            data-i18n="resetTheme"
+            id="resetTheme"
+            type="button"
+          >
+            ↺ Default theme</button
+          ><button
+            class="action"
+            data-i18n="exportTheme"
+            id="exportTheme"
+            type="button"
+          >
+            Copy theme JSON</button
+          ><button
+            class="action"
+            data-i18n="importTheme"
+            id="importTheme"
+            type="button"
+          >
+            Import theme JSON</button
+          ><span aria-live="polite" id="themeNotice" role="status"></span>
+        </div>
+      </section>
+      <main class="layout">
+        <section class="panel controls">
+          <h2 data-i18n="controls">Experiment controls</h2>
+          <div class="group">
+            <label class="label" data-i18n="lensType">Select lens type</label>
+            <div class="split">
+              <button class="choice active" data-lens="convex">
+                <svg height="39" viewbox="0 0 48 39" width="48">
+                  <path
+                    d="M24 2 Q 7 19 24 37 Q 41 19 24 2Z"
+                    fill="#c9b8f1"
+                    stroke="#7f65b0"
+                    stroke-width="2"
+                  ></path></svg
+                ><span data-i18n="convex">Convex</span></button
+              ><button class="choice" data-lens="concave">
+                <svg height="39" viewbox="0 0 48 39" width="48">
+                  <path
+                    d="M10 2 Q 25 19 10 37 L38 37 Q 23 19 38 2Z"
+                    fill="#c9b8f1"
+                    stroke="#7f65b0"
+                    stroke-width="2"
+                  ></path></svg
+                ><span data-i18n="concave">Concave</span>
+              </button>
+            </div>
+          </div>
+          <div class="group">
+            <label class="label" data-i18n="objectType">Choose an object</label>
+            <div class="shapes">
+              <button class="shapeChoice active" data-shape="arrow">
+                <span>⬆</span><span data-i18n="arrow">Arrow</span></button
+              ><button class="shapeChoice" data-shape="candle">
+                <span>🕯️</span><span data-i18n="candle">Candle</span></button
+              ><button class="shapeChoice" data-shape="tree">
+                <span>🌲</span><span data-i18n="tree">Tree</span></button
+              ><button class="shapeChoice" data-shape="star">
+                <span>★</span><span data-i18n="star">Star</span></button
+              ><button class="shapeChoice" data-shape="triangle">
+                <span>▲</span><span data-i18n="triangle">Triangle</span></button
+              ><button class="shapeChoice" data-shape="flower">
+                <span>🌷</span><span data-i18n="flower">Flower</span>
+              </button>
+            </div>
+          </div>
+          <div class="group">
+            <div class="scaleHeader">
+              <label class="label" data-i18n="distance" for="distance"
+                >Object distance</label
+              ><output id="distanceOutput">36 cm</output>
+            </div>
+            <input
+              id="distance"
+              max="90"
+              min="12"
+              step="1"
+              type="range"
+              value="36"
+            />
+          </div>
+          <div class="group">
+            <div class="scaleHeader">
+              <label class="label" data-i18n="focal" for="focal"
+                >Focal length magnitude</label
+              ><output id="focalOutput">18 cm</output>
+            </div>
+            <input
+              id="focal"
+              max="32"
+              min="10"
+              step="1"
+              type="range"
+              value="18"
+            />
+          </div>
+          <div class="group">
+            <div class="scaleHeader">
+              <label class="label" data-i18n="diameter" for="diameter"
+                >Lens diameter</label
+              ><output id="diameterOutput">80 cm</output>
+            </div>
+            <input
+              id="diameter"
+              max="100"
+              min="30"
+              step="2"
+              type="range"
+              value="80"
+            />
+          </div>
+          <div class="group">
+            <div class="scaleHeader">
+              <label class="label" data-i18n="height" for="height"
+                >Object height</label
+              ><output id="heightOutput">16 cm</output>
+            </div>
+            <input
+              id="height"
+              max="26"
+              min="8"
+              step="1"
+              type="range"
+              value="16"
+            />
+          </div>
+          <div class="group verticalControl">
+            <div class="scaleHeader">
+              <label class="label" data-i18n="vertical" for="vertical"
+                >Object vertical position</label
+              ><output id="verticalOutput">0 cm</output>
+            </div>
+            <input
+              id="vertical"
+              max="22"
+              min="-22"
+              step="1"
+              type="range"
+              value="0"
+            />
+            <div class="verticalEnds">
+              <span data-i18n="below">↓ Down</span
+              ><span data-i18n="above">↑ Up</span>
+            </div>
+          </div>
+          <div class="group">
+            <div class="checks">
+              <label
+                ><input checked="" id="showRays" type="checkbox" /><span
+                  data-i18n="rays"
+                  >Show principal rays</span
+                ></label
+              ><label
+                ><input checked="" id="showGrid" type="checkbox" /><span
+                  data-i18n="grid"
+                  >Show grid and focal points</span
+                ></label
+              ><label
+                ><input checked="" id="animate" type="checkbox" /><span
+                  data-i18n="animate"
+                  >Animate light rays</span
+                ></label
+              >
+            </div>
+          </div>
+        </section>
+        <section class="panel stagePanel">
+          <div class="stageHeader">
+            <h2 data-i18n="scene">Live ray diagram</h2>
+            <span class="small live" id="status">● Live simulation</span>
+          </div>
+          <div class="stage">
+            <svg
+              aria-label="Interactive thin lens ray diagram"
+              id="svg"
+              role="img"
+              viewbox="0 0 940 580"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <lineargradient id="lensGradient">
+                  <stop stop-color="#4b8eaa" stop-opacity=".4"></stop>
+                  <stop
+                    offset=".45"
+                    stop-color="#9cddf5"
+                    stop-opacity=".77"
+                  ></stop>
+                  <stop
+                    offset=".7"
+                    stop-color="#78c6e9"
+                    stop-opacity=".65"
+                  ></stop>
+                  <stop
+                    offset="1"
+                    stop-color="#356b9c"
+                    stop-opacity=".3"
+                  ></stop>
+                </lineargradient>
+                <clippath id="diagramClip">
+                  <rect height="580" width="940" x="0" y="0"></rect>
+                </clippath>
+              </defs>
+              <g id="gridLayer"></g>
+              <g id="axisLayer"></g>
+              <g clip-path="url(#diagramClip)">
+                <g id="raysLayer"></g>
+                <path class="lens" id="lensPath"></path>
+                <g id="objectLayer"></g>
+                <g id="imageLayer"></g>
+              </g>
+              <g id="annotations"></g>
+            </svg>
+          </div>
+          <div class="stageFooter">
+            <div class="legend">
+              <span
+                ><i class="dot" style="background: #e88b53"></i
+                ><span data-i18n="actualObject">Object</span></span
+              ><span
+                ><i class="dot" style="background: #8274c6"></i
+                ><span data-i18n="formedImage">Image</span></span
+              ><span
+                ><i class="dot" style="background: #e2a347"></i
+                ><span data-i18n="light">Light rays</span></span
+              ><span
+                ><i
+                  class="dot"
+                  style="background: #b099d6; border-top: 1px dashed #b099d6"
+                ></i
+                ><span data-i18n="extensions">Virtual extensions</span></span
+              >
+            </div>
+            <button class="action" data-i18n="reset" id="reset">↺ Reset</button>
+          </div>
+          <div class="stageFooter small" data-i18n="dragHelp">
+            Drag the orange handle in any direction to move the object
+            horizontally or vertically.
+          </div>
+        </section>
+        <aside class="panel results">
+          <h2 data-i18n="measurements">Image properties</h2>
+          <div class="content">
+            <div class="metrics">
+              <div class="metric">
+                <div class="name" data-i18n="objectDistance">
+                  Object distance (dₒ)
+                </div>
+                <strong id="doVal">36 cm</strong>
+              </div>
+              <div class="metric">
+                <div class="name" data-i18n="imageDistance">
+                  Image distance (dᵢ)
+                </div>
+                <strong id="diVal">36 cm</strong>
+              </div>
+              <div class="metric">
+                <div class="name" data-i18n="magnification">
+                  Magnification (m)
+                </div>
+                <strong id="magVal">−1.00×</strong>
+              </div>
+              <div class="metric">
+                <div class="name" data-i18n="imageHeight">
+                  Image height (hᵢ)
+                </div>
+                <strong id="hiVal">−16 cm</strong>
+              </div>
+            </div>
+            <div>
+              <div class="result">
+                <h3 data-i18n="interpretation">What happens?</h3>
+                <p id="description"></p>
+              </div>
+              <div class="formula">1/f = 1/dₒ + 1/dᵢ</div>
+              <p class="note" data-i18n="note">
+                Positive image distance means a real image on the opposite side.
+                Negative image distance means a virtual image on the object's
+                side. This is an ideal thin-lens simulation.
+              </p>
+            </div>
+          </div>
+        </aside>
+      </main>
+    </div>
+    <script>
+      (() => {
+        "use strict";
+        const $ = (id) => document.getElementById(id);
+        const NS = "http://www.w3.org/2000/svg";
+        const cx = 470,
+          cy = 292,
+          scale = 4.65,
+          viewW = 940,
+          viewH = 580;
+        const state = {
+          lens: "convex",
+          shape: "arrow",
+          d: 36,
+          f: 18,
+          h: 16,
+          y: 0,
+          diameter: 80,
+          rays: true,
+          grid: true,
+          animate: true,
+          lang: "en",
+          drag: false,
+        };
+        const strings = {
+          en: {
+            title: "Exploring Lenses",
+            subtitle: "Explore how lenses form images using real ray geometry",
+            controls: "Experiment controls",
+            lensType: "Select lens type",
+            convex: "Convex",
+            concave: "Concave",
+            objectType: "Choose an object",
+            arrow: "Arrow",
+            candle: "Candle",
+            tree: "Tree",
+            star: "Star",
+            triangle: "Triangle",
+            flower: "Flower",
+            distance: "Object distance",
+            focal: "Focal length magnitude",
+            height: "Object height",
+            vertical: "Vertical position",
+            below: "↓ Down",
+            above: "↑ Up",
+            diameter: "Lens diameter",
+            rays: "Show principal rays",
+            grid: "Show grid and focal points",
+            animate: "Animate light rays",
+            scene: "Live ray diagram",
+            actualObject: "Object",
+            formedImage: "Image",
+            light: "Light rays",
+            extensions: "Virtual extensions",
+            reset: "↺ Reset",
+            dragHelp:
+              "Drag the orange handle in any direction to move the object horizontally or vertically.",
+            measurements: "Image properties",
+            objectDistance: "Object distance (dₒ)",
+            imageDistance: "Image distance (dᵢ)",
+            magnification: "Magnification (m)",
+            imageHeight: "Image height (hᵢ)",
+            interpretation: "What happens?",
+            note: "Positive image distance means a real image on the opposite side. Negative image distance means a virtual image on the object's side. This is an ideal thin-lens simulation.",
+            real: "real",
+            virtual: "virtual",
+            upright: "upright",
+            inverted: "inverted",
+            enlarged: "enlarged",
+            reduced: "reduced",
+            same: "same size",
+            infinity:
+              "At the focal point: outgoing rays are parallel, so the image is at infinity.",
+            desc: (type, dir, size) =>
+              `The ${type} image is ${dir} and ${size}. ${type === "real" ? "It can be projected onto a screen." : "It cannot be projected onto a screen."}`,
+            live: "● Live simulation",
+            themeButton: "🎨 Customize theme",
+            themeHeading: "Customize your lab",
+            themeDescription:
+              "Choose a palette or make every color your own. Saved automatically on this device.",
+            themePresets: "Theme presets",
+            presetAtelier: "Polar prism",
+            presetOcean: "Ocean breeze",
+            presetMidnight: "Midnight lab",
+            presetForest: "Botanical",
+            presetRose: "Rose quartz",
+            presetContrast: "High contrast",
+            themeColors: "Custom colors",
+            colorBg: "Page background",
+            colorPanel: "Cards / panels",
+            colorCanvas: "Diagram canvas",
+            colorText: "Main text",
+            colorSub: "Secondary text",
+            colorAccent: "Primary accent",
+            colorSecondary: "Secondary accent",
+            colorBorder: "Borders",
+            colorObject: "Object",
+            colorImage: "Image",
+            colorRay: "Main light ray",
+            colorRay2: "Secondary ray",
+            colorVirtual: "Virtual rays",
+            colorLens: "Lens outline",
+            themeLook: "Appearance",
+            roundness: "Corner roundness",
+            fontScale: "Interface text size",
+            spacing: "Panel spacing",
+            resetTheme: "↺ Default theme",
+            exportTheme: "Copy theme JSON",
+            importTheme: "Import theme JSON",
+          },
+          ar: {
+            title: "استكشاف العدسات",
+            subtitle: "استكشف تكوّن الأخيلة باستخدام أشعة الضوء والعدسات",
+            controls: "لوحة التحكم",
+            lensType: "اختر نوع العدسة",
+            convex: "محدبة",
+            concave: "مقعرة",
+            objectType: "اختر الجسم",
+            arrow: "سهم",
+            candle: "شمعة",
+            tree: "شجرة",
+            star: "نجمة",
+            triangle: "مثلث",
+            flower: "زهرة",
+            distance: "بُعد الجسم",
+            focal: "مقدار البعد البؤري",
+            height: "ارتفاع الجسم",
+            vertical: "موضع الجسم الرأسي",
+            below: "↓ أسفل",
+            above: "↑ أعلى",
+            diameter: "قطر العدسة",
+            rays: "إظهار الأشعة الرئيسة",
+            grid: "إظهار الشبكة والبؤرتين",
+            animate: "تحريك أشعة الضوء",
+            scene: "مخطط الأشعة التفاعلي",
+            actualObject: "الجسم",
+            formedImage: "الخيال",
+            light: "أشعة الضوء",
+            extensions: "امتدادات وهمية",
+            reset: "↺ إعادة الضبط",
+            dragHelp:
+              "اسحب المقبض البرتقالي في أي اتجاه لتحريك الجسم أفقيًا أو رأسيًا.",
+            measurements: "خصائص الخيال",
+            objectDistance: "بُعد الجسم (dₒ)",
+            imageDistance: "بُعد الخيال (dᵢ)",
+            magnification: "التكبير (m)",
+            imageHeight: "ارتفاع الخيال (hᵢ)",
+            interpretation: "ماذا يحدث؟",
+            note: "بُعد الخيال الموجب يعني خيالًا حقيقيًا في الجهة المقابلة. أما البعد السالب فيعني خيالًا وهميًا في جهة الجسم. هذه محاكاة مثالية للعدسة الرقيقة.",
+            real: "حقيقي",
+            virtual: "وهمي",
+            upright: "معتدل",
+            inverted: "مقلوب",
+            enlarged: "مكبّر",
+            reduced: "مصغّر",
+            same: "مساوٍ للجسم في الحجم",
+            infinity:
+              "الجسم عند البؤرة: تخرج الأشعة متوازية، ويقع الخيال عند اللانهاية.",
+            desc: (type, dir, size) =>
+              `الخيال ${type} و${dir} و${size}. ${type === "حقيقي" ? "يمكن استقباله على شاشة." : "لا يمكن استقباله على شاشة."}`,
+            live: "● محاكاة مباشرة",
+            themeButton: "🎨 تخصيص المظهر",
+            themeHeading: "خصّص مظهر المختبر",
+            themeDescription:
+              "اختر سمة جاهزة أو غيّر كل لون بنفسك. يتم حفظ خياراتك تلقائيًا على هذا الجهاز.",
+            themePresets: "السمات الجاهزة",
+            presetAtelier: "منشور قطبي",
+            presetOcean: "نسيم البحر",
+            presetMidnight: "مختبر ليلي",
+            presetForest: "طبيعي",
+            presetRose: "وردي",
+            presetContrast: "تباين عالٍ",
+            themeColors: "ألوان مخصصة",
+            colorBg: "خلفية الصفحة",
+            colorPanel: "البطاقات واللوحات",
+            colorCanvas: "خلفية الرسم",
+            colorText: "النص الأساسي",
+            colorSub: "النص الثانوي",
+            colorAccent: "اللون الرئيسي",
+            colorSecondary: "اللون الثانوي",
+            colorBorder: "الحدود",
+            colorObject: "الجسم",
+            colorImage: "الخيال",
+            colorRay: "الشعاع الرئيسي",
+            colorRay2: "الشعاع الثاني",
+            colorVirtual: "الأشعة الوهمية",
+            colorLens: "حدود العدسة",
+            themeLook: "المظهر العام",
+            roundness: "استدارة الزوايا",
+            fontScale: "حجم الخط",
+            spacing: "المسافات بين اللوحات",
+            resetTheme: "↺ المظهر الافتراضي",
+            exportTheme: "نسخ إعدادات السمة",
+            importTheme: "استيراد إعدادات السمة",
+          },
+        };
+        const el = (tag, attrs = {}, parent) => {
+          const e = document.createElementNS(NS, tag);
+          Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v));
+          if (parent) parent.appendChild(e);
+          return e;
+        };
+        const text = (parent, x, y, s, cls = "svgLabel", attrs = {}) => {
+          const e = el("text", { x, y, class: cls, ...attrs }, parent);
+          e.textContent = s;
+          return e;
+        };
+        const line = (parent, x1, y1, x2, y2, attrs = {}) =>
+          el("line", { x1, y1, x2, y2, ...attrs }, parent);
+        const clear = (id) => $(id).replaceChildren();
+        const fmt = (n) => Number(n.toFixed(2)).toString();
+        const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+        // The very same emoji glyph is used in the selector, the object, and its image.
+        // Flipping the whole SVG group keeps candle flames and tree trunks aligned.
+        const objectEmojis = {
+          arrow: "⬆",
+          candle: "🕯️",
+          tree: "🌲",
+          star: "★",
+          triangle: "▲",
+          flower: "🌷",
+        };
+        function silhouette(parent, shape, x, y, h, colorClass, opacity = 1) {
+          const sign = h >= 0 ? 1 : -1,
+            H = Math.abs(h);
+          const g = el(
+            "g",
+            {
+              class: colorClass,
+              opacity,
+              transform: `translate(${x} ${y}) scale(1 ${sign})`,
+            },
+            parent,
+          );
+          const glyph = el(
+            "text",
+            {
+              x: 0,
+              y: -H * 0.06,
+              "text-anchor": "middle",
+              "font-family":
+                "Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, system-ui, sans-serif",
+              "font-size": Math.max(1, H * 0.91),
+              "font-weight": "normal",
+              stroke: "none",
+              "paint-order": "normal",
+              "pointer-events": "none",
+              "aria-hidden": "true",
+            },
+            g,
+          );
+          glyph.textContent = objectEmojis[shape] || objectEmojis.arrow;
+          return g;
+        }
+
+        function renderShapePreviews() {
+          document.querySelectorAll(".shapeChoice").forEach((button) => {
+            const svg = button.querySelector(".shapePreview");
+            if (!svg) return;
+            svg.replaceChildren();
+            silhouette(svg, button.dataset.shape, 48, 78, 64, "obj");
+          });
+        }
+
+        function ray(parent, points, klass) {
+          return el(
+            "polyline",
+            {
+              points: points
+                .map((p) => p.map((v) => v.toFixed(1)).join(","))
+                .join(" "),
+              class: klass,
+            },
+            parent,
+          );
+        }
+        function scene() {
+          const F = (state.lens === "convex" ? 1 : -1) * state.f;
+          const d = state.d,
+            h = state.h,
+            offset = state.y;
+          const denom = d - F;
+          const infinite = Math.abs(denom) < 1e-8;
+          const di = infinite ? Infinity : (F * d) / denom;
+          const m = infinite ? Infinity : -di / d;
+          const xi = infinite ? Infinity : cx + di * scale;
+          const xo = cx - d * scale,
+            baseY = cy - offset * scale,
+            yt = baseY - h * scale;
+          const imgBase = infinite ? Infinity : cy - m * offset * scale;
+          const yImage = infinite ? Infinity : imgBase - m * h * scale;
+          clear("gridLayer");
+          clear("axisLayer");
+          clear("raysLayer");
+          clear("objectLayer");
+          clear("imageLayer");
+          clear("annotations");
+          if (state.grid) {
+            for (let x = cx % 46; x < viewW; x += 46)
+              line($("gridLayer"), x, 0, x, viewH, { class: "gridline" });
+            for (let y = cy % 46; y < viewH; y += 46)
+              line($("gridLayer"), 0, y, viewW, y, { class: "gridline" });
+          }
+          line($("axisLayer"), 0, cy, 940, cy, { class: "axis" });
+          line($("axisLayer"), cx, 33, cx, 550, {
+            stroke: "#a2c1d0",
+            "stroke-width": 1,
+            "stroke-dasharray": "5 8",
+            opacity: 0.65,
+          });
+          const lf = state.f * scale;
+          for (const dx of [-lf, lf]) {
+            if (cx + dx > 18 && cx + dx < 920) {
+              el(
+                "circle",
+                { cx: cx + dx, cy, r: 5, class: "focus" },
+                $("annotations"),
+              );
+              text($("annotations"), cx + dx - 4, cy + 22, "F", "svgLabel");
+            }
+          }
+          // Aperture diameter controls the visible lens and the bundle of rays
+          // that can actually pass through it (thin lens approximation).
+          const aperture = state.diameter * scale,
+            top = cy - aperture / 2,
+            bottom = cy + aperture / 2;
+          const thick = state.lens === "convex" ? 22 : 27;
+          const lp =
+            state.lens === "convex"
+              ? `M ${cx} ${top} Q ${cx + thick * 2.3} ${cy} ${cx} ${bottom} Q ${cx - thick * 2.3} ${cy} ${cx} ${top} Z`
+              : `M ${cx - 27} ${top} Q ${cx + 15} ${cy} ${cx - 27} ${bottom} L ${cx + 27} ${bottom} Q ${cx - 15} ${cy} ${cx + 27} ${top} Z`;
+          $("lensPath").setAttribute("d", lp);
+          const rays = $("raysLayer");
+          if (state.rays) {
+            const klass1 = state.animate ? "mainRay flow" : "mainRay";
+            const klass2 = state.animate ? "mainRay ray2 flow" : "mainRay ray2";
+            const drawThrough = (yl, cls) => {
+              // All paraxial rays from the tip meet at the same paraxial image.
+              // This also handles virtual images with outgoing diverging rays.
+              const incoming = (yl - yt) / (cx - xo);
+              const outgoing = incoming - (yl - cy) / (F * scale);
+              const endx = 940,
+                leftx = Math.min(xo, cx - 470);
+              ray(
+                rays,
+                [
+                  [xo, yt],
+                  [cx, yl],
+                ],
+                cls,
+              );
+              ray(
+                rays,
+                [
+                  [cx, yl],
+                  [endx, yl + outgoing * (endx - cx)],
+                ],
+                cls,
+              );
+              if (di < 0) {
+                ray(
+                  rays,
+                  [
+                    [cx, yl],
+                    [leftx, yl + outgoing * (leftx - cx)],
+                  ],
+                  "virtualRay",
+                );
+              }
+            };
+            // Horizontal incident ray is used where it physically meets the aperture.
+            // Otherwise draw the marginal ray through an aperture edge.
+            drawThrough(clamp(yt, top + 2, bottom - 2), klass1);
+            drawThrough(cy, klass2);
+          }
+          silhouette(
+            $("objectLayer"),
+            state.shape,
+            xo,
+            baseY,
+            h * scale,
+            "obj",
+          );
+          const grip = el(
+            "circle",
+            {
+              cx: xo,
+              cy: yt,
+              r: 12,
+              class: "handle",
+              id: "grip",
+              tabindex: 0,
+              role: "slider",
+              "aria-label": "Move object horizontally and vertically",
+              "aria-valuemin": "12",
+              "aria-valuemax": "90",
+              "aria-valuenow": `${d}, ${offset}`,
+            },
+            $("objectLayer"),
+          );
+          el(
+            "circle",
+            {
+              cx: xo,
+              cy: yt,
+              r: 22,
+              fill: "none",
+              stroke: "#e68149",
+              "stroke-dasharray": "4 6",
+              opacity: 0.65,
+              "pointer-events": "none",
+            },
+            $("objectLayer"),
+          );
+          if (!infinite && Number.isFinite(xi) && xi > -6000 && xi < 6000) {
+            silhouette(
+              $("imageLayer"),
+              state.shape,
+              xi,
+              imgBase,
+              m * h * scale,
+              "imageObj",
+            );
+            if (xi > -100 && xi < 1040)
+              text(
+                $("annotations"),
+                xi + 12,
+                imgBase + (m < 0 ? m * h * scale - 12 : 20),
+                state.lang === "ar" ? "الخيال" : "Image",
+                "svgLabel",
+              );
+          }
+          text(
+            $("annotations"),
+            clamp(xo, 30, 400),
+            clamp(baseY + 33, 20, 560),
+            state.lang === "ar" ? "الجسم" : "Object",
+          );
+          text(
+            $("annotations"),
+            cx + 11,
+            58,
+            state.lang === "ar" ? "العدسة" : "Lens",
+          );
+          $("distanceOutput").textContent = `${d} cm`;
+          $("focalOutput").textContent = `${state.f} cm`;
+          $("heightOutput").textContent = `${h} cm`;
+          $("verticalOutput").textContent =
+            `${offset > 0 ? "+" : ""}${offset} cm`;
+          $("diameterOutput").textContent = `${state.diameter} cm`;
+          $("doVal").textContent = `${d} cm`;
+          $("diVal").textContent = infinite ? "∞" : `${fmt(di)} cm`;
+          $("magVal").textContent = infinite ? "∞" : `${fmt(m)}×`;
+          $("hiVal").textContent = infinite ? "∞" : `${fmt(m * h)} cm`;
+          const t = strings[state.lang];
+          const type = di >= 0 ? t.real : t.virtual;
+          const orient = m < 0 ? t.inverted : t.upright;
+          const size =
+            Math.abs(m) > 1.005
+              ? t.enlarged
+              : Math.abs(m) < 0.995
+                ? t.reduced
+                : t.same;
+          $("description").textContent = infinite
+            ? t.infinity
+            : t.desc(type, orient, size);
+          $("status").textContent = t.live;
+          // Native pointer events after each redraw attach to new grip.
+          grip.addEventListener("pointerdown", (e) => {
+            state.drag = true;
+            $("svg").setPointerCapture(e.pointerId);
+            e.preventDefault();
+          });
+          grip.addEventListener("keydown", (e) => {
+            if (
+              ["ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown"].includes(
+                e.key,
+              )
+            ) {
+              e.preventDefault();
+              if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+                state.d = clamp(
+                  state.d + (e.key === "ArrowLeft" ? 1 : -1),
+                  12,
+                  90,
+                );
+                $("distance").value = state.d;
+              } else {
+                state.y = clamp(
+                  state.y + (e.key === "ArrowUp" ? 1 : -1),
+                  -22,
+                  22,
+                );
+                $("vertical").value = state.y;
+              }
+              drawSoon();
+            }
+          });
+        }
+        $("svg").addEventListener("pointermove", (e) => {
+          if (!state.drag) return;
+          const p = pointerToSvg(e);
+          if (p) {
+            state.d = Math.round(clamp((cx - p.x) / scale, 12, 90));
+            $("distance").value = state.d;
+            state.y = Math.round(clamp((cy - p.y) / scale - state.h, -22, 22));
+            $("vertical").value = state.y;
+            drawSoon();
+          }
+        });
+        $("svg").addEventListener("pointerup", () => {
+          state.drag = false;
+        });
+        $("svg").addEventListener("pointercancel", () => {
+          state.drag = false;
+        });
+        function pointerToSvg(e) {
+          const svg = $("svg"),
+            pt = svg.createSVGPoint();
+          pt.x = e.clientX;
+          pt.y = e.clientY;
+          const matrix = svg.getScreenCTM();
+          return matrix ? pt.matrixTransform(matrix.inverse()) : null;
+        }
+        let pending = false;
+        function drawSoon() {
+          if (pending) return;
+          pending = true;
+          requestAnimationFrame(() => {
+            pending = false;
+            scene();
+          });
+        }
+
+        const themePresets = {
+          atelier: {
+            bg: "#e9f2f7",
+            panel: "#ffffff",
+            canvas: "#e4f3fa",
+            text: "#102b44",
+            sub: "#587187",
+            accent: "#006e9f",
+            secondary: "#7b43af",
+            border: "#b9d4e2",
+            object: "#ed693c",
+            image: "#7d4ac2",
+            ray: "#d99600",
+            ray2: "#1b8dce",
+            virtual: "#b2549b",
+            lens: "#00a2bd",
+          },
+          ocean: {
+            bg: "#eaf7f6",
+            panel: "#ffffff",
+            canvas: "#edf9fb",
+            text: "#153b48",
+            sub: "#4b6e78",
+            accent: "#007e88",
+            secondary: "#3176d3",
+            border: "#b9dcd9",
+            object: "#e17b43",
+            image: "#327cc2",
+            ray: "#df9c30",
+            ray2: "#277eaa",
+            virtual: "#a878be",
+            lens: "#249fb4",
+          },
+          midnight: {
+            bg: "#11192e",
+            panel: "#1b2740",
+            canvas: "#162338",
+            text: "#f5f6ff",
+            sub: "#bbcee0",
+            accent: "#7ce1c4",
+            secondary: "#a996ff",
+            border: "#3e526f",
+            object: "#fba968",
+            image: "#c6a6ff",
+            ray: "#ffd47c",
+            ray2: "#90b9ff",
+            virtual: "#d3a0db",
+            lens: "#95c8ef",
+          },
+          forest: {
+            bg: "#eaf1e5",
+            panel: "#fffef9",
+            canvas: "#f0f4e9",
+            text: "#263d33",
+            sub: "#657566",
+            accent: "#327e61",
+            secondary: "#c27a3b",
+            border: "#cddbc7",
+            object: "#bc784a",
+            image: "#718fb0",
+            ray: "#d19b36",
+            ray2: "#598fa1",
+            virtual: "#9e77a8",
+            lens: "#64a69d",
+          },
+          rose: {
+            bg: "#fff0f4",
+            panel: "#fffafd",
+            canvas: "#fff3fa",
+            text: "#493445",
+            sub: "#806b7e",
+            accent: "#c34a80",
+            secondary: "#7863c5",
+            border: "#f0cddc",
+            object: "#db8271",
+            image: "#946bce",
+            ray: "#e3a34c",
+            ray2: "#8c77d1",
+            virtual: "#b787bd",
+            lens: "#bd82c2",
+          },
+          contrast: {
+            bg: "#ffffff",
+            panel: "#ffffff",
+            canvas: "#fafafa",
+            text: "#101010",
+            sub: "#343434",
+            accent: "#0055aa",
+            secondary: "#7a20a0",
+            border: "#434343",
+            object: "#b44900",
+            image: "#5229ab",
+            ray: "#a45100",
+            ray2: "#0055aa",
+            virtual: "#852592",
+            lens: "#003c98",
+          },
+        };
+        const defaultLook = { radius: 20, font: 100, spacing: 16 };
+        const themeConfig = {
+          preset: "atelier",
+          colors: { ...themePresets.atelier },
+          look: { ...defaultLook },
+        };
+        const themeStorageKey = "lens-polar-prism-v1";
+        const isHex = (v) => typeof v === "string" && /^#[0-9a-f]{6}$/i.test(v);
+        function themeApply() {
+          const root = document.documentElement;
+          Object.entries(themeConfig.colors).forEach(([key, value]) =>
+            root.style.setProperty(
+              "--" +
+                ({
+                  secondary: "secondary",
+                  ray2: "ray2",
+                  virtual: "virtual",
+                  lens: "lens-color",
+                }[key] || key),
+              value,
+            ),
+          );
+          // Additional object/ray CSS variables use separate custom property names.
+          root.style.setProperty("--corner", themeConfig.look.radius + "px");
+          root.style.setProperty("--ui-scale", themeConfig.look.font / 100);
+          root.style.setProperty(
+            "--panel-gap",
+            themeConfig.look.spacing + "px",
+          );
+          root.style.setProperty(
+            "--surface",
+            mixHex(themeConfig.colors.panel, themeConfig.colors.accent, 0.075),
+          );
+          root.style.setProperty(
+            "--surface-active",
+            mixHex(themeConfig.colors.panel, themeConfig.colors.accent, 0.15),
+          );
+          document.querySelectorAll("[data-color]").forEach((input) => {
+            input.value = themeConfig.colors[input.dataset.color];
+          });
+          document
+            .querySelectorAll("[data-preset]")
+            .forEach((btn) =>
+              btn.setAttribute(
+                "aria-pressed",
+                String(btn.dataset.preset === themeConfig.preset),
+              ),
+            );
+          for (const [key, id] of [
+            ["radius", "radiusSetting"],
+            ["font", "fontSetting"],
+            ["spacing", "spacingSetting"],
+          ]) {
+            $(id).value = themeConfig.look[key];
+            $(key + "Value").textContent =
+              themeConfig.look[key] + (key === "font" ? "%" : "px");
+          }
+          document
+            .querySelectorAll(".legend .dot")
+            .forEach(
+              (dot, i) =>
+                (dot.style.background = [
+                  themeConfig.colors.object,
+                  themeConfig.colors.image,
+                  themeConfig.colors.ray,
+                  themeConfig.colors.virtual,
+                ][i]),
+            );
+          // Rebuild icon thumbnails and diagram after theme change; SVG styling follows the shared variables.
+          drawSoon();
+        }
+        function mixHex(a, b, amount) {
+          const channel = (str, pos) => parseInt(str.slice(pos, pos + 2), 16);
+          return (
+            "#" +
+            [1, 3, 5]
+              .map((i) =>
+                Math.round(
+                  channel(a, i) * (1 - amount) + channel(b, i) * amount,
+                )
+                  .toString(16)
+                  .padStart(2, "0"),
+              )
+              .join("")
+          );
+        }
+        function themeSave() {
+          try {
+            localStorage.setItem(themeStorageKey, JSON.stringify(themeConfig));
+          } catch (_) {}
+        }
+        function themeLoad() {
+          try {
+            const saved = JSON.parse(
+              localStorage.getItem(themeStorageKey) || "null",
+            );
+            if (!saved || typeof saved !== "object") return;
+            const colors = saved.colors || {};
+            for (const key of Object.keys(themeConfig.colors))
+              if (isHex(colors[key])) themeConfig.colors[key] = colors[key];
+            if (
+              typeof saved.preset === "string" &&
+              Object.hasOwn(themePresets, saved.preset)
+            )
+              themeConfig.preset = saved.preset;
+            else themeConfig.preset = "custom";
+            for (const [key, lo, hi] of [
+              ["radius", 4, 34],
+              ["font", 85, 125],
+              ["spacing", 8, 26],
+            ])
+              if (Number.isFinite(+saved.look?.[key]))
+                themeConfig.look[key] = Math.max(
+                  lo,
+                  Math.min(hi, +saved.look[key]),
+                );
+          } catch (_) {}
+        }
+        function chooseTheme(name) {
+          themeConfig.preset = name;
+          themeConfig.colors = { ...themePresets[name] };
+          themeApply();
+          themeSave();
+        }
+        function themeNotice(msg) {
+          $("themeNotice").textContent = msg;
+        }
+        $("themeToggle").onclick = () => {
+          const open = $("themePanel").hidden;
+          $("themePanel").hidden = !open;
+          $("themeToggle").setAttribute("aria-expanded", String(open));
+        };
+        $("closeTheme").onclick = () => {
+          $("themePanel").hidden = true;
+          $("themeToggle").setAttribute("aria-expanded", "false");
+          $("themeToggle").focus();
+        };
+        document
+          .querySelectorAll("[data-preset]")
+          .forEach((b) => (b.onclick = () => chooseTheme(b.dataset.preset)));
+        document.querySelectorAll("[data-color]").forEach(
+          (input) =>
+            (input.oninput = () => {
+              themeConfig.colors[input.dataset.color] = input.value;
+              themeConfig.preset = "custom";
+              themeApply();
+              themeSave();
+            }),
+        );
+        for (const [key, id] of [
+          ["radius", "radiusSetting"],
+          ["font", "fontSetting"],
+          ["spacing", "spacingSetting"],
+        ])
+          $(id).oninput = (e) => {
+            themeConfig.look[key] = Number(e.target.value);
+            themeApply();
+            themeSave();
+          };
+        $("resetTheme").onclick = () => {
+          themeConfig.look = { ...defaultLook };
+          chooseTheme("atelier");
+          themeNotice("");
+        };
+        $("exportTheme").onclick = async () => {
+          const json = JSON.stringify(
+            { colors: themeConfig.colors, look: themeConfig.look },
+            null,
+            2,
+          );
+          try {
+            await navigator.clipboard.writeText(json);
+            themeNotice(
+              state.lang === "ar" ? "تم نسخ الإعدادات." : "Theme copied.",
+            );
+          } catch (_) {
+            prompt(
+              state.lang === "ar"
+                ? "انسخ إعدادات السمة:"
+                : "Copy theme settings:",
+              json,
+            );
+          }
+        };
+        $("importTheme").onclick = () => {
+          const raw = prompt(
+            state.lang === "ar"
+              ? "ألصق JSON الخاص بالسمة:"
+              : "Paste theme JSON:",
+          );
+          if (!raw) return;
+          try {
+            const obj = JSON.parse(raw);
+            if (
+              !obj.colors ||
+              Object.keys(themePresets.atelier).some(
+                (key) => !isHex(obj.colors[key]),
+              )
+            )
+              throw Error("Invalid colors");
+            const look = obj.look || {};
+            themeConfig.colors = Object.fromEntries(
+              Object.keys(themePresets.atelier).map((key) => [
+                key,
+                obj.colors[key],
+              ]),
+            );
+            themeConfig.look = {
+              radius: clamp(Number(look.radius) || 20, 4, 34),
+              font: clamp(Number(look.font) || 100, 85, 125),
+              spacing: clamp(Number(look.spacing) || 16, 8, 26),
+            };
+            themeConfig.preset = "custom";
+            themeApply();
+            themeSave();
+            themeNotice(
+              state.lang === "ar" ? "تم استيراد السمة." : "Theme imported.",
+            );
+          } catch (_) {
+            themeNotice(
+              state.lang === "ar"
+                ? "ملف السمة غير صالح."
+                : "Invalid theme JSON.",
+            );
+          }
+        };
+        themeLoad();
+        themeApply();
+        renderShapePreviews();
+
+        function renderLanguage() {
+          const t = strings[state.lang];
+          $("language").textContent =
+            state.lang === "ar" ? "English" : "العربية";
+          $("language").setAttribute(
+            "aria-label",
+            state.lang === "ar" ? "Switch to English" : "التبديل إلى العربية",
+          );
+          document.documentElement.lang = state.lang;
+          document.documentElement.dir = state.lang === "ar" ? "rtl" : "ltr";
+          document.querySelectorAll("[data-i18n]").forEach((n) => {
+            n.textContent = t[n.dataset.i18n];
+          });
+          drawSoon();
+        }
+        document.querySelectorAll("[data-lens]").forEach(
+          (b) =>
+            (b.onclick = () => {
+              state.lens = b.dataset.lens;
+              document
+                .querySelectorAll("[data-lens]")
+                .forEach((x) => x.classList.toggle("active", x === b));
+              drawSoon();
+            }),
+        );
+        document.querySelectorAll("[data-shape]").forEach(
+          (b) =>
+            (b.onclick = () => {
+              state.shape = b.dataset.shape;
+              document
+                .querySelectorAll("[data-shape]")
+                .forEach((x) => x.classList.toggle("active", x === b));
+              drawSoon();
+            }),
+        );
+        for (const [id, key] of [
+          ["distance", "d"],
+          ["focal", "f"],
+          ["height", "h"],
+          ["vertical", "y"],
+          ["diameter", "diameter"],
+        ])
+          $(id).oninput = (e) => {
+            state[key] = +e.target.value;
+            drawSoon();
+          };
+        for (const [id, key] of [
+          ["showRays", "rays"],
+          ["showGrid", "grid"],
+          ["animate", "animate"],
+        ])
+          $(id).onchange = (e) => {
+            state[key] = e.target.checked;
+            drawSoon();
+          };
+        $("language").onclick = () => {
+          state.lang = state.lang === "ar" ? "en" : "ar";
+          renderLanguage();
+        };
+        $("reset").onclick = () => {
+          Object.assign(state, {
+            lens: "convex",
+            shape: "arrow",
+            d: 36,
+            f: 18,
+            h: 16,
+            y: 0,
+            diameter: 80,
+            rays: true,
+            grid: true,
+            animate: true,
+          });
+          document
+            .querySelectorAll("[data-lens],[data-shape]")
+            .forEach((b) =>
+              b.classList.toggle(
+                "active",
+                b.dataset.lens === "convex" || b.dataset.shape === "arrow",
+              ),
+            );
+          for (const [id, val] of [
+            ["distance", 36],
+            ["focal", 18],
+            ["height", 16],
+            ["vertical", 0],
+            ["diameter", 80],
+          ])
+            $(id).value = val;
+          for (const id of ["showRays", "showGrid", "animate"])
+            $(id).checked = true;
+          drawSoon();
+        };
+        renderLanguage();
+      })();
+    </script>
+  </body>
+</html>
